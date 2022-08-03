@@ -12,17 +12,82 @@ def root():
     return render_template('index.j2')
 
 
-@ app.route('/productions')
+@ app.route('/productions', methods=['GET', 'POST'])
 def productions():
-    query = "SELECT * FROM Productions;"
+    if request.method == 'GET':
+        getproductions = "SELECT productionID as ID, showName as 'Show Name',contactName as 'Contact Name',contactEmail as 'Contact Email',addressLine1 as 'Address Line 1',addressLine2 as 'Address Line 2',city as City,state as State,zipCode as 'Zip Code',Studios.studioName as Studio FROM productions INNER JOIN Studios ON Productions.studioID = Studios.studioID ORDER BY productionID ASC;"
+        getproduction = "SELECT * FROM Productions WHERE productionID = %s;"
+        getstudionames = "SELECT studioName, studioID FROM Studios;"
+        conn = connection()
+        cursor = conn.cursor()
+        cursor.execute(getproductions)
+        results = cursor.fetchall()
+        cursor.execute(getstudionames)
+        results_studio = cursor.fetchall()
+        cursor.close()
+        conn.close()
+    return render_template('productions.j2', productions=results, studios=results_studio)
+    elif request.method == 'POST':
+        showName = request.form['inputProductionName']
+        contactName = request.form['inputContactName']
+        email = request.form['inputContactEmail']
+	    addressLine1 = request.form['inputAddressLine1']
+	    addressLine2 = request.form['inputAddressLine2']
+	    city = request.form['inputCity']
+	    state = request.form['inputState']
+	    zipCode = request.form['inputZipCode']
+	    studioID = request.form['inputStudioID']
+        query = "INSERT INTO Productions (showName, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode, studioID) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s,);"
+        conn = connection()
+        cursor = conn.cursor()
+        cursor.execute(query, (showName, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode, studioID))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return redirect('/productions')
+
+@ app.route('/productions/delete/<int:id>')
+def delete_production(id):
+    query = "DELETE FROM productions WHERE productionID = %s;"
     conn = connection()
     cursor = conn.cursor()
-    cursor.execute(query)
-    results = cursor.fetchall()
+    cursor.execute(query, (id))
+    conn.commit()
     cursor.close()
     conn.close()
-    return render_template('productions.j2', productions=results)
+    return redirect('/productions')
 
+@ app.route('/productions/edit/<int:id>', methods=['GET', 'POST'])
+def edit_production(id):
+    if request.method == 'GET':
+	    getproduction = "SELECT * FROM Productions WHERE productionID = %s;"
+        getstudionames = "SELECT studioName, studioID FROM studios;"
+        conn = connection()
+        cursor = conn.cursor()
+        cursor.execute(getproduction)
+        results = cursor.fetchone()
+	    cursor.execute(getstudionames)
+	    results_studios = cursor.fetchall()
+        cursor.close()
+        conn.close()
+    return render_template('productions_edit.j2', production=results, studios=results_studios)
+    if request.method == 'POST':
+        studioName = request.form['editName']
+        contactName = request.form['editContact']
+        contactEmail = request.form['editEmail']
+        addressLine1 = request.form['editAddress']
+        addressLine2 = request.form['editAddress2']
+        city = request.form['editCity']
+        state = request.form['editState']
+        zipCode = request.form['editZip']
+        query = "UPDATE studios SET studioName = %s, contactName = %s, contactEmail = %s, addressLine1 = %s, addressLine2 = %s, city = %s, state = %s, zipCode = %s WHERE studioID = %s;"
+        conn = connection()
+        cursor = conn.cursor()
+        cursor.execute(query, (studioName, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode, id))
+        conn.commit()
+        cursor.close()
+        conn.close()
+    return redirect('/studios')
 
 @ app.route('/orders', methods=['GET', 'POST'])
 def orders():
