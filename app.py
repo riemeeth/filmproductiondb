@@ -27,7 +27,7 @@ def productions():
         cursor.close()
         conn.close()
     return render_template('productions.j2', productions=results, studios=results_studio)
-    elif request.method == 'POST':
+    if request.method == 'POST':
         showName = request.form['inputProductionName']
         contactName = request.form['inputContactName']
         email = request.form['inputContactEmail']
