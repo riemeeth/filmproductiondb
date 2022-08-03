@@ -1,0 +1,44 @@
+{% extends "nav_footer.j2" %}
+
+{% block content %}
+{# somewhat janky, but it works.  IF vendor has 0 products, returns alert #}
+{% if products|length < 1 %}
+    <div class="container">
+        <div class="alert alert-danger text-center" role="alert">
+            <strong>No products found!</strong>
+        </div>
+        <div class="text-center">
+            <a href="/vendors"><button type="submit" class="btn btn-warning">Back</button><a>
+        </div>
+    </div>
+    
+{% else %}
+
+{# builds products for search vendor #}
+<div class ="container">
+<legend class="d-flex float-none w-auto p-2 justify-content-center">All Products from {{ products[0]['Vendor'] }} </legend>
+    <table class="table">
+        <thead class="align-center text-center">
+            <tr>
+                {% for key in products[0].keys() %}
+                    <th>{{key}}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr class="align-middle text-center">
+                {% for val in product.keys() %}
+                    <td>{{product[val]}}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="text-center">
+        <a href="/vendors"><button type="submit" class="btn btn-warning">Back</button><a>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

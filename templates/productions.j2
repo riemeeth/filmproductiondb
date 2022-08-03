@@ -1,0 +1,53 @@
+<!doctype html>
+
+{% extends "nav_footer.j2" %}
+{% block content %}
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/test.css') }}">
+<div>
+<table>
+<thead>
+<tr>
+    {% for key in productions[0].keys() %}
+    <th>{{key}}</th>
+    {% endfor %}
+</tr>
+<tbody>
+{% for production in productions %}
+<tr>
+    {% for val in production.keys() %}
+    <td>{{production[val]}}</td>
+    {% endfor %}
+    <td><a href="">Edit</a></td>
+    <td><a href="">Delete</a></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+
+<div>
+    <fieldset>
+        <legend>Add Production</legend>
+            <label>Studio ID:</label>
+            <input type="number" name="studio_id" id="studio_id" />
+            <label>Show Name:</label>
+            <input type="text" name="production_name" id="production_name">
+            <label>Contact Name:</label>
+            <input type="text" name="contact_name" id="contact_name">
+            <label>Contact Email:</label>
+            <input type="text" name="contact_email" id="contact_email">
+            <label>Address Line 1:</label>
+            <input type="text" name="address_line_1" id="address_line_1">
+            <label>Address Line 2:</label>
+            <input type="text" name="address_line_2" id="address_line_2">
+            <label>City:</label>
+            <input type="text" name="city" id="city">
+            <label>State:</label>
+            <input type="text" name="state" id="state">
+            <label>ZipCode:</label>
+            <input type="text" name="zipcode" id="zipcode">
+            <button>Add Production</button>
+    </fieldset>
+</div>
+{{super()}}
+{% endblock%}

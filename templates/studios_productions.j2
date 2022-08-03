@@ -1,0 +1,44 @@
+{% extends "nav_footer.j2" %}
+
+{% block content %}
+{# somewhat janky, but it works. if studio has 0 productions, it will show the "no productions" message. #}
+{% if productions|length < 1 %}
+    <div class="container">
+        <div class="alert alert-danger text-center" role="alert">
+            <strong>No productions found!</strong>
+        </div>
+        <div class="text-center">
+            <a href="/studios"><button type="submit" class="btn btn-warning">Back</button><a>
+        </div>
+    </div>
+    
+{% else %}
+
+{# builds productions by searched studio #}
+<div class ="container">
+<legend class="d-flex float-none w-auto p-2 justify-content-center">Current Productions by {{ productions[0]['Studio'] }} </legend>
+    <table class="table">
+        <thead class="align-center text-center">
+            <tr>
+                {% for key in productions[0].keys() %}
+                    <th>{{key}}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for production in productions %}
+            <tr class="align-middle text-center">
+                {% for val in production.keys() %}
+                    <td>{{production[val]}}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="text-center">
+        <a href="/studios"><button type="submit" class="btn btn-warning">Back</button><a>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

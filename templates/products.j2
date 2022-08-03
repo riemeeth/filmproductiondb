@@ -1,0 +1,58 @@
+{% extends "nav_footer.j2" %}
+
+{% block content %}
+
+{# build ALL products table #}
+<div class="container">
+<legend class="d-flex float-none w-auto p-2 justify-content-center">Available Products</legend>
+    <table class="table">
+        <thead class="align-center text-center">
+            <tr>
+                {% for key in products[0].keys() %}
+                    <th>{{key}}</th>
+                {% endfor %}
+            </tr>
+        <tbody>
+            {% for products in products %}
+                <tr class="align-middle text-center">
+                    {% for val in products.keys() %}
+                    <td>{{products[val]}}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{# container the CREATE form #}
+<form class="container" style="max-width:35vw" action="" method="POST">
+    <legend class="float-none w-auto p-2 text-center">Add New Product</legend>
+    <div class= "row g-3">
+        <div class="col-md-12">
+            <label for="inputProductName" class="form-label">Product Name</label>
+            <input type="text" class="form-control" id="inputProductName" name="inputProductName" required>
+        </div>
+        <div class="col-md-6">
+            <label for="inputCost" class="form-label">Cost</label>
+            <input type="number" min=".01" step=".01" class="form-control" id="inputCost" placeholder="$0.00" name="inputCost" required>
+        </div>
+        <div class="col-md-6">
+            <label for="inputPrice" class="form-label">Retail Price</label>
+            <input type="number" min=".01" step=".01" class="form-control" id="inputPrice" placeholder="$0.00" name="inputPrice" required>
+        </div>
+        <div class="col-md-12">
+            <label for="inputVendor" class="form-label">Vendor</label>
+            <select type="text" id="inputVendor" class="form-select" name="inputVendor" required>
+                <option value="" selected hidden>Select...</option>
+                    {% for vendor in vendors%}
+                    <option value="{{ vendor['vendorID'] }}">{{vendor['vendorName']}}</option>
+                    {% endfor %}
+            </select>
+        </div>
+        <div class="col-12 text-center">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </div>  
+</form>
+
+{% endblock %}

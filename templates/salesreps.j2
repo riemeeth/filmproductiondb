@@ -1,0 +1,39 @@
+<!doctype html>
+
+{% extends "nav_footer.j2" %}
+{% block content %}
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/test.css') }}">
+<div>
+<table>
+<thead>
+<tr>
+    {% for key in salesreps[0].keys() %}
+    <th>{{key}}</th>
+    {% endfor %}
+</tr>
+<tbody>
+{% for salesrep in salesreps %}
+<tr>
+    {% for val in salesrep.keys() %}
+    <td>{{salesrep[val]}}</td>
+    {% endfor %}
+    <td><a href="">Edit</a></td>
+    <td><a href="">Delete</a></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+
+<div>
+    <fieldset>
+        <legend>Add New Sales Rep</legend>
+            <label>Sales Rep Name:</label>
+            <input type="text" name="salesrepname" id="salesrepname">
+            <label>Sales Rep Email:</label>
+            <input type="text" name="salesrepemail" id="salesrepemail">
+            <button type="button">Add Sales Rep</button>
+        </fieldset>
+</div>
+{{super()}}
+{% endblock %}

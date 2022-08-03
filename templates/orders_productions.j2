@@ -1,0 +1,55 @@
+{% extends "nav_footer.j2" %}
+
+{% block content %}
+{# somewhat janky, but it works. if production has 0 orders, it will show the "no orders" message. #}
+{% if productions|length < 1 %}
+    <div class="container">
+        <div class="alert alert-danger text-center" role="alert">
+            <strong>No orders found!</strong>
+        </div>
+        <div class="text-center">
+            <a href="/orders"><button type="submit" class="btn btn-warning">Back</button><a>
+        </div>
+    </div>
+    
+{% else %}
+
+{# builds orders by searched production #}
+<div class ="container">
+<legend class="d-flex float-none w-auto p-2 justify-content-center">Current Orders from {{ productions[0]['Production'] }} </legend>
+    <table class="table">
+        <thead class="align-center text-center">
+            <tr>
+                {% for key in productions[0].keys() %}
+                    <th>{{key}}</th>
+                {% endfor %}
+                <th>View Order</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for production in productions %}
+            <tr class="align-middle text-center">
+                {% for val in production.keys() %}
+                    <td>{{production[val]}}</td>
+                {% endfor %}
+                <td><a href="/orders/invoice/{{ production['Order ID'] }}" class="btn btn-secondary">Invoice</a>
+                </td>
+                <td>
+                    <a href="/orders/edit/{{ production[ 'Order ID' ]}}"><button type="submit" class="btn btn-info">Edit</button></a>
+                </td>
+                <td>
+                    <a href="/orders/delete/{{ production[ 'Order ID' ] }}"><button type="submit" class="btn btn-danger">Delete</button><a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="text-center">
+        <a href="/orders"><button type="submit" class="btn btn-warning">Back</button><a>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

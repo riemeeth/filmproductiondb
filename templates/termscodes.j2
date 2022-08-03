@@ -1,0 +1,43 @@
+<!doctype html>
+
+{% extends "nav_footer.j2" %}
+{% block content %}
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/test.css') }}">
+<div>
+<table>
+<thead>
+<tr>
+    {% for key in termscodes[0].keys() %}
+    <th>{{key}}</th>
+    {% endfor %}
+</tr>
+<tbody>
+{% for code in termscodes %}
+<tr>
+    {% for val in code.keys() %}
+    <td>{{code[val]}}</td>
+    {% endfor %}
+    <td><a href="">Edit</a></td>
+    <td><a href="">Delete</a></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+
+<div>
+    <fieldset>
+        <legend>Add Terms Code</legend>
+        <form action="/addtermscode" method="POST">
+            <label for="termcode">Terms Code:</label>
+            <input type="text" name="termcode" id="termcode">
+            <label for="termname">Terms Code Name:</label>
+            <input type="text" name="termname" id="termname">
+            <input type="submit" value="Add">
+        </form>
+    </fieldset>
+</div>
+
+
+{{super()}}
+{% endblock %}
