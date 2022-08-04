@@ -17,13 +17,9 @@ def productions():
     if request.method == 'GET':
         conn = connection()
         cursor = conn.cursor()
-        cursor.execute(getproductions)
-        results = cursor.fetchall()
-        cursor.execute(getstudionames)
-        results_studios = cursor.fetchall()
         cursor.close()
         conn.close()
-        return render_template('productions.j2', productions=results, studios=results_studios)
+        return render_template('productions.j2')
     if request.method == 'POST':
         studioID = request.form['inputStudioID']
         showName = request.form['inputProductionName']
