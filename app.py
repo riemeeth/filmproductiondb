@@ -46,49 +46,6 @@ def productions():
     return redirect('/productions')
 
 
-@ app.route('/productions/delete/<int:id>')
-def delete_production(id):
-    query = "DELETE FROM productions WHERE productionID = %s;"
-    conn = connection()
-    cursor = conn.cursor()
-    cursor.execute(query, (id))
-    conn.commit()
-    cursor.close()
-    conn.close()
-    return redirect('/productions')
-
-
-@ app.route('/productions/edit/<int:id>', methods=['GET', 'POST'])
-def edit_production(id):
-    if request.method == 'GET':
-	    getproduction = "SELECT * FROM Productions WHERE productionID = %s;"
-        getstudionames = "SELECT studioName, studioID FROM studios;"
-        conn = connection()
-        cursor = conn.cursor()
-        cursor.execute(getproduction)
-        results = cursor.fetchone()
-	    cursor.execute(getstudionames)
-	    results_studios = cursor.fetchall()
-        cursor.close()
-        conn.close()
-    return render_template('productions_edit.j2', production=results, studios=results_studios)
-    if request.method == 'POST':
-        studioName = request.form['editName']
-        contactName = request.form['editContact']
-        contactEmail = request.form['editEmail']
-        addressLine1 = request.form['editAddress']
-        addressLine2 = request.form['editAddress2']
-        city = request.form['editCity']
-        state = request.form['editState']
-        zipCode = request.form['editZip']
-        query = "UPDATE Productions SET productionName = %s, contactName = %s, contactEmail = %s, addressLine1 = %s, addressLine2 = %s, city = %s, state = %s, zipCode = %s WHERE productionID = %s;"
-        conn = connection()
-        cursor = conn.cursor()
-        cursor.execute(query, (studioName, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode, id))
-        conn.commit()
-        cursor.close()
-        conn.close()
-    return redirect('/studios')
 
 
 @ app.route('/orders', methods=['GET', 'POST'])
