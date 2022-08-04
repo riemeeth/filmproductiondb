@@ -131,7 +131,7 @@ def order_invoice(id):
 def products():
     if request.method == 'GET':
         getproducts = "SELECT ProductID as ID, productName as Name, cost as Cost, retailPrice as 'Retail Price', vendors.vendorName as Vendor FROM Products INNER JOIN vendors ON products.vendorid = vendors.vendorid ORDER BY productID ASC;"
-        getvendornames = "SELECT vendor, vendorID FROM Vendors;"
+        getvendornames = "SELECT vendorName, vendorID FROM Vendors;"
         conn = connection()
         cursor = conn.cursor()
         cursor.execute(getproducts)
