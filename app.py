@@ -46,8 +46,6 @@ def productions():
     return redirect('/productions')
 
 
-
-
 @ app.route('/orders', methods=['GET', 'POST'])
 def orders():
     if request.method == 'GET':
