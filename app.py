@@ -44,7 +44,8 @@ def productions():
         conn.commit()
         cursor.close()
         conn.close()
-        return redirect('/productions')
+    return redirect('/productions')
+
 
 @ app.route('/productions/delete/<int:id>')
 def delete_production(id):
@@ -56,6 +57,7 @@ def delete_production(id):
     cursor.close()
     conn.close()
     return redirect('/productions')
+
 
 @ app.route('/productions/edit/<int:id>', methods=['GET', 'POST'])
 def edit_production(id):
@@ -88,6 +90,7 @@ def edit_production(id):
         cursor.close()
         conn.close()
     return redirect('/studios')
+
 
 @ app.route('/orders', methods=['GET', 'POST'])
 def orders():
