@@ -14,7 +14,7 @@
         <tbody>
             {% for productions in productions %}
                 <tr class="align-middle text-center">
-                    {% for val in productions.key() %}
+                    {% for val in productions.keys() %}
                     <td>{{productions[val]}}</td>
                     {% endfor %}
                 </tr>
