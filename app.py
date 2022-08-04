@@ -12,6 +12,40 @@ def root():
     return render_template('index.j2')
 
 
+@ app.route('/productions', methods=['GET', 'POST'])
+def productions():
+    if request.method == 'GET':
+        getproductions = "SELECT Studios.studioName as Studio FROM Productions INNER JOIN Studios ON Productions.studioID = Studios.studioID, productionID as ID, showName as 'Show Name', contactName as 'Contact Name', contactEmail as 'Contact Email', addressLine1 as 'Address Line 1', addressLine2 as 'Address Line 2', city as City, state as State, zipCode as 'Zip Code';"
+        getstudionames = "SELECT studioName, studioID FROM Studios;"
+        conn = connection()
+        cursor = conn.cursor()
+        cursor.execute(getproductions)
+        results = cursor.fetchall()
+        cursor.execute(getstudionames)
+        results_studios = cursor.fetchall()
+        cursor.close()
+        conn.close()
+        return render_template('productions.j2', productions=results, studios=results_studios)
+    if request.method == 'POST':
+        studioID = request.form['inputStudioID']
+        showName = request.form['inputProductionName']
+        contactName = request.form['inputContactName']
+        contactEmail = request.form['inputContactEmail']
+        addressLine1 = request.form['inputAddressLine1']
+        addressLine2 = request.form['inputAddressLIne2']
+        city = request.form['inputCity']
+        state = request.form['inputState']
+        zipCode = request.form['inputZipCode']
+        query = "INSERT INTO Productions (studioID, showName, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);"
+        conn = connection()
+        cursor = conn.cursor()
+        cursor.execute(query, (studioID, showName, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return redirect('/productions')
+
+
 @ app.route('/orders', methods=['GET', 'POST'])
 def orders():
     if request.method == 'GET':
