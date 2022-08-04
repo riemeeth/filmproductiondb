@@ -15,7 +15,7 @@ def root():
 @ app.route('/productions', methods=['GET', 'POST'])
 def productions():
     if request.method == 'GET':
-        getproductions = "SELECT productionID as ID, showName as 'Show Name',contactName as 'Contact Name',contactEmail as 'Contact Email',addressLine1 as 'Address Line 1',addressLine2 as 'Address Line 2',city as City,state as State,zipCode as 'Zip Code',Studios.studioName as Studio FROM productions INNER JOIN Studios ON Productions.studioID = Studios.studioID ORDER BY productionID ASC;"
+        getproductions = "SELECT Studios.studioName as Studio FROM productions INNER JOIN Studios ON Productions.studioID = Studios.studioID, productionID as ID, showName as 'Show Name', contactName as 'Contact Name', contactEmail as 'Contact Email',addressLine1 as 'Address Line 1', addressLine2 as 'Address Line 2',city as City, state as State, zipCode as 'Zip Code', Studios.studioName as Studio FROM Productions INNER JOIN Studios ON Productions.studioID = Studios.studioID ORDER BY productionID ASC;"
         getproduction = "SELECT * FROM Productions WHERE productionID = %s;"
         getstudionames = "SELECT studioName, studioID FROM Studios;"
         conn = connection()
@@ -28,6 +28,7 @@ def productions():
         conn.close()
     return render_template('productions.j2', productions=results, studios=results_studio)
     if request.method == 'POST':
+        studioID = request.form['inputStudioID']
         showName = request.form['inputProductionName']
         contactName = request.form['inputContactName']
         email = request.form['inputContactEmail']
@@ -36,11 +37,10 @@ def productions():
 	    city = request.form['inputCity']
 	    state = request.form['inputState']
 	    zipCode = request.form['inputZipCode']
-	    studioID = request.form['inputStudioID']
-        query = "INSERT INTO Productions (showName, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode, studioID) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s,);"
+        query = "INSERT INTO Productions (studioID, showName, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);"
         conn = connection()
         cursor = conn.cursor()
-        cursor.execute(query, (showName, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode, studioID))
+        cursor.execute(query, (studioID, showName, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode))
         conn.commit()
         cursor.close()
         conn.close()
@@ -82,7 +82,7 @@ def edit_production(id):
         city = request.form['editCity']
         state = request.form['editState']
         zipCode = request.form['editZip']
-        query = "UPDATE studios SET studioName = %s, contactName = %s, contactEmail = %s, addressLine1 = %s, addressLine2 = %s, city = %s, state = %s, zipCode = %s WHERE studioID = %s;"
+        query = "UPDATE Productions SET productionName = %s, contactName = %s, contactEmail = %s, addressLine1 = %s, addressLine2 = %s, city = %s, state = %s, zipCode = %s WHERE productionID = %s;"
         conn = connection()
         cursor = conn.cursor()
         cursor.execute(query, (studioName, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode, id))
