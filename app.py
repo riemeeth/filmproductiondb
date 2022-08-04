@@ -15,11 +15,17 @@ def root():
 @ app.route('/productions', methods=['GET', 'POST'])
 def productions():
     if request.method == 'GET':
+        getproductions = "SELECT Studios.studioName as Studio, productionID as ID, showName as 'Show Name', Productions.contactName as 'Contact Name', Productions.contactEmail as 'Contact Email', Productions.addressLine1 as 'Address Line 1', Productions.addressLine2 as 'Address Line 2', Productions.city as City, Productions.state as State, Productions.zipCode as 'Zip Code' FROM Productions INNER JOIN Studios ON Productions.studioID = Studios.studioID;"
+        getstudionames = "SELECT studioName, studioID FROM Studios;"
         conn = connection()
         cursor = conn.cursor()
+        cursor.execute(getproductions)
+        results = cursor.fetchall()
+        cursor.execute(getstudionames)
+        results_studios = cursor.fetchall()
         cursor.close()
         conn.close()
-        return render_template('productions.j2')
+        return render_template('productions.j2', productions=results, studios=results_studios)
     if request.method == 'POST':
         studioID = request.form['inputStudioID']
         showName = request.form['inputProductionName']
