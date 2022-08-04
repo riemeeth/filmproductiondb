@@ -14,7 +14,6 @@ def root():
 
 @ app.route('/productions', methods=['GET', 'POST'])
 def productions():
-    if request.method == 'GET':
         getproductions = "SELECT Studios.studioName as Studio FROM productions INNER JOIN Studios ON Productions.studioID = Studios.studioID, productionID as ID, showName as 'Show Name', contactName as 'Contact Name', contactEmail as 'Contact Email',addressLine1 as 'Address Line 1', addressLine2 as 'Address Line 2',city as City, state as State, zipCode as 'Zip Code', Studios.studioName as Studio FROM Productions INNER JOIN Studios ON Productions.studioID = Studios.studioID ORDER BY productionID ASC;"
         getstudionames = "SELECT studioName, studioID FROM Studios;"
         conn = connection()
@@ -26,27 +25,9 @@ def productions():
         cursor.close()
         conn.close()
     return render_template('productions.j2', productions=results, studios=results_studio)
-    if request.method == 'POST':
-        studioID = request.form['inputStudioID']
-        showName = request.form['inputProductionName']
-        contactName = request.form['inputContactName']
-        email = request.form['inputContactEmail']
-	    addressLine1 = request.form['inputAddressLine1']
-	    addressLine2 = request.form['inputAddressLine2']
-	    city = request.form['inputCity']
-	    state = request.form['inputState']
-	    zipCode = request.form['inputZipCode']
-        query = "INSERT INTO Productions (studioID, showName, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);"
-        conn = connection()
-        cursor = conn.cursor()
-        cursor.execute(query, (studioID, showName, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode))
-        conn.commit()
-        cursor.close()
-        conn.close()
-    return redirect('/productions')
 
 
-@ app.route('/orders', methods=['GET', 'POST'])
+@ app.route('/orders', methods=['GET'])
 def orders():
     if request.method == 'GET':
         query = "SELECT DISTINCT(orders.orderid) as 'Order ID', studios.studioName as Studio, productions.showName as Production, termscodes.termName as Terms, salesreps.salesRepName as 'Sales Rep', orderDate as 'Order Date', purchaseOrder as 'Purchase Order', (SELECT SUM(totalAmount) FROM OrderDetails WHERE orders.orderid = orderdetails.orderid) as 'Total Invoice Amount' FROM Orders INNER JOIN orderdetails ON orders.orderid = orderdetails.orderid INNER JOIN productions ON orders.productionid = productions.productionid INNER JOIN salesreps ON orders.salesrepid = salesreps.salesrepid INNER JOIN termscodes ON termscodes.termscodeid = orders.termscodeid LEFT JOIN studios ON studios.studioID = productions.studioID GROUP BY orders.orderid ORDER BY orders.orderid ASC;"
