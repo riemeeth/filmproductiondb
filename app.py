@@ -12,22 +12,19 @@ def root():
     return render_template('index.j2')
 
 
-@ app.route('/productions', methods=['GET', 'POST'])
+@ app.route('/productions', methods=['GET'])
 def productions():
         getproductions = "SELECT Studios.studioName as Studio FROM productions INNER JOIN Studios ON Productions.studioID = Studios.studioID, productionID as ID, showName as 'Show Name', contactName as 'Contact Name', contactEmail as 'Contact Email',addressLine1 as 'Address Line 1', addressLine2 as 'Address Line 2',city as City, state as State, zipCode as 'Zip Code', Studios.studioName as Studio FROM Productions INNER JOIN Studios ON Productions.studioID = Studios.studioID ORDER BY productionID ASC;"
-        getstudionames = "SELECT studioName, studioID FROM Studios;"
         conn = connection()
         cursor = conn.cursor()
         cursor.execute(getproductions)
         results = cursor.fetchall()
-        cursor.execute(getstudionames)
-        results_studio = cursor.fetchall()
         cursor.close()
         conn.close()
-    return render_template('productions.j2', productions=results, studios=results_studio)
+    return render_template('productions.j2', productions=results)
 
 
-@ app.route('/orders', methods=['GET'])
+@ app.route('/orders', methods=['GET', 'POST'])
 def orders():
     if request.method == 'GET':
         query = "SELECT DISTINCT(orders.orderid) as 'Order ID', studios.studioName as Studio, productions.showName as Production, termscodes.termName as Terms, salesreps.salesRepName as 'Sales Rep', orderDate as 'Order Date', purchaseOrder as 'Purchase Order', (SELECT SUM(totalAmount) FROM OrderDetails WHERE orders.orderid = orderdetails.orderid) as 'Total Invoice Amount' FROM Orders INNER JOIN orderdetails ON orders.orderid = orderdetails.orderid INNER JOIN productions ON orders.productionid = productions.productionid INNER JOIN salesreps ON orders.salesrepid = salesreps.salesrepid INNER JOIN termscodes ON termscodes.termscodeid = orders.termscodeid LEFT JOIN studios ON studios.studioID = productions.studioID GROUP BY orders.orderid ORDER BY orders.orderid ASC;"
