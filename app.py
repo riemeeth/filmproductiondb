@@ -49,17 +49,17 @@ def productions():
 @ app.route('/productions/edit/<int:id>', methods=['GET', 'POST'])
 def edit_production(id):
     if request.method == 'GET':
-        getproductions = "SELECT Studios.studioName as Studio, productionID as ID, showName as 'Show Name', Productions.contactName as 'Contact Name', Productions.contactEmail as 'Contact Email', Productions.addressLine1 as 'Address Line 1', Productions.addressLine2 as 'Address Line 2', Productions.city as City, Productions.state as State, Productions.zipCode as 'Zip Code' FROM Productions INNER JOIN Studios ON Productions.studioID = Studios.studioID;"
+        getproduction = "SELECT * FROM Productions WHERE productionID = %s;"
         getstudionames = "SELECT studioName, studioID FROM Studios;"
         conn = connection()
         cursor = conn.cursor()
-        cursor.execute(getproductions)
+        cursor.execute(getproduction)
         results = cursor.fetchall()
         cursor.execute(getstudionames)
         results_studios = cursor.fetchall()
         cursor.close()
         conn.close()
-        return render_template('productions_edit.j2', productions=results, studios=results_studios)
+        return render_template('productions_edit.j2', production=results, studios=results_studios)
     if request.method == 'POST':
         studioID = request.form['editStudioID']
         showName = request.form['editProductionName']
@@ -91,7 +91,7 @@ def delete_production(id):
     conn.close()
     return redirect('/productions')
 
-    
+
 @ app.route('/orders', methods=['GET', 'POST'])
 def orders():
     if request.method == 'GET':

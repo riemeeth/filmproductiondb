@@ -7,100 +7,100 @@
     <form class="container col-md-6 justify-content-center" action="" method="POST">
         <legend class="float-none w-auto p-2 text-center">Edit Production</legend>
         <div class= "row g-3">
-        <div class="col-md-12">
-            <label for="editProductionName" class="form-label">Show Name</label>
-            <input type="text" class="form-control" id="editProductionName" name="editProductionName" value="{{ productions['showName'] }}" required>
-        </div>
-	<div class="col-md-12">
-            <label for="editContactName" class="form-label">Contact Name</label>
-            <input type="text" class="form-control" id="editContactName" name="editContactName" value="{{ productions['contactName'] }}" required>
-        </div>
-	<div class="col-md-12">
-            <label for="editContactEmail" class="form-label">Contact Email</label>
-            <input type="text" class="form-control" id="editContactEmail" name="editContactEmail" value="{{ productions['contactEmail'] }}" required>
-        </div>
-	<div class="col-md-12">
-            <label for="editAddressLine1" class="form-label">Address Line 1</label>
-            <input type="text" class="form-control" id="editAddressLine1" name="editAddressLine1" value="{{ productions['addressLine1'] }}" required>
-        </div>
-	<div class="col-md-12">
-            <label for="editAddressLine2" class="form-label">Address Line 2</label>
-            <input type="text" class="form-control" id="editAddressLine2" name="editAddressLine2" value="{{ productions['addressLine2'] }}">
-        </div>
-	<div class="col-md-12">
-            <label for="editCity" class="form-label">City</label>
-            <input type="text" class="form-control" id="editCity" name="editCity" value="{{ productions['city'] }}" required>
-        </div>
-        <div class="col-md-4">
-            <label for="editState" class="form-label">State</label>
-            <select id="editState" class="form-select" id="editState" name="editState" value="{{ productions['state'] }}" required>
-                 <option value="" selected hidden>Select...</option>
-                 <option value="AL">Alabama</option>
-                 <option value="AK">Alaska</option>
-                 <option value="AZ">Arizona</option>
-                 <option value="AR">Arkansas</option>
-                 <option value="CA">California</option>
-                 <option value="CO">Colorado</option>
-                 <option value="CT">Connecticut</option>
-                 <option value="DE">Delaware</option>
-                 <option value="DC">District Of Columbia</option>
-                 <option value="FL">Florida</option>
-                 <option value="GA">Georgia</option>
-                 <option value="HI">Hawaii</option>
-                 <option value="ID">Idaho</option>
-                 <option value="IL">Illinois</option>
-                 <option value="IN">Indiana</option>
-                 <option value="IA">Iowa</option>
-                            <option value="KS">Kansas</option>
-                            <option value="KY">Kentucky</option>
-                            <option value="LA">Louisiana</option>
-                            <option value="ME">Maine</option>
-                            <option value="MD">Maryland</option>
-                            <option value="MA">Massachusetts</option>
-                            <option value="MI">Michigan</option>
-                            <option value="MN">Minnesota</option>
-                            <option value="MS">Mississippi</option>
-                            <option value="MO">Missouri</option>
-                            <option value="MT">Montana</option>
-                            <option value="NE">Nebraska</option>
-                            <option value="NV">Nevada</option>
-                            <option value="NH">New Hampshire</option>
-                            <option value="NJ">New Jersey</option>
-                            <option value="NM">New Mexico</option>
-                            <option value="NY">New York</option>
-                            <option value="NC">North Carolina</option>
-                            <option value="ND">North Dakota</option>
-                            <option value="OH">Ohio</option>
-                            <option value="OK">Oklahoma</option>
-                            <option value="OR">Oregon</option>
-                            <option value="PA">Pennsylvania</option>
-                            <option value="RI">Rhode Island</option>
-                            <option value="SC">South Carolina</option>
-                            <option value="SD">South Dakota</option>
-                            <option value="TN">Tennessee</option>
-                            <option value="TX">Texas</option>
-                            <option value="UT">Utah</option>
-                            <option value="VT">Vermont</option>
-                            <option value="VA">Virginia</option>
-                            <option value="WA">Washington</option>
-                            <option value="WV">West Virginia</option>
-                            <option value="WI">Wisconsin</option>
-                            <option value="WY">Wyoming</option>
-                        </select>
-                    </div>
-        <div class="col-md-12">
-            <label for="editZipcode" class="form-label">ZipCode</label>
-            <input type="text" class="form-control" id="editZipcode" name="editZipcode" value="{{ productions['zipCode'] }}" required>
-        </div>
-        <div class="col-md-12">
-            <label for="editStudio" class="form-label">Studio</label>
-            <select type="text" id="editStudio" class="form-select" name="editStudio" value="{{ productions['studio'] }}" required>
-                <option value="" selected hidden>Select...</option>
-                    {% for studio in studios%}
-                    <option value="{{ studio['studioID'] }}">{{studio['studioName']}}</option>
-                    {% endfor %}
-            </select>
-        </div>
+            <div class="col-md-12">
+                <label for="editProductionName" class="form-label">Show Name</label>
+                <input type="text" class="form-control" id="editProductionName" name="editProductionName" value="{{ production['showName'] }}" required>
+            </div>
+            <div class="col-md-12">
+                <label for="editContactName" class="form-label">Contact Name</label>
+                <input type="text" class="form-control" id="editContactName" name="editContactName" value="{{ production['contactName'] }}" required>
+            </div>
+            <div class="col-md-12">
+                <label for="editContactEmail" class="form-label">Contact Email</label>
+                <input type="text" class="form-control" id="editContactEmail" name="editContactEmail" value="{{ production['contactEmail'] }}" required>
+            </div>
+            <div class="col-md-12">
+                <label for="editAddressLine1" class="form-label">Address Line 1</label>
+                <input type="text" class="form-control" id="editAddressLine1" name="editAddressLine1" value="{{ production['addressLine1'] }}" required>
+            </div>
+            <div class="col-md-12">
+                <label for="editAddressLine2" class="form-label">Address Line 2</label>
+                <input type="text" class="form-control" id="editAddressLine2" name="editAddressLine2" value="{{ production['addressLine2'] }}">
+            </div>
+            <div class="col-md-12">
+                <label for="editCity" class="form-label">City</label>
+                <input type="text" class="form-control" id="editCity" name="editCity" value="{{ production['city'] }}" required>
+            </div>
+            <div class="col-md-4">
+                <label for="editState" class="form-label">State</label>
+                <select id="editState" class="form-select" id="editState" name="editState" value="{{ production['state'] }}" required>
+                    <option value="" selected hidden>Select...</option>
+                    <option value="AL">Alabama</option>
+                    <option value="AK">Alaska</option>
+                    <option value="AZ">Arizona</option>
+                    <option value="AR">Arkansas</option>
+                    <option value="CA">California</option>
+                    <option value="CO">Colorado</option>
+                    <option value="CT">Connecticut</option>
+                    <option value="DE">Delaware</option>
+                    <option value="DC">District Of Columbia</option>
+                    <option value="FL">Florida</option>
+                    <option value="GA">Georgia</option>
+                    <option value="HI">Hawaii</option>
+                    <option value="ID">Idaho</option>
+                    <option value="IL">Illinois</option>
+                    <option value="IN">Indiana</option>
+                    <option value="IA">Iowa</option>
+                    <option value="KS">Kansas</option>
+                    <option value="KY">Kentucky</option>
+                    <option value="LA">Louisiana</option>
+                    <option value="ME">Maine</option>
+                    <option value="MD">Maryland</option>
+                    <option value="MA">Massachusetts</option>
+                    <option value="MI">Michigan</option>
+                    <option value="MN">Minnesota</option>
+                    <option value="MS">Mississippi</option>
+                    <option value="MO">Missouri</option>
+                    <option value="MT">Montana</option>
+                    <option value="NE">Nebraska</option>
+                    <option value="NV">Nevada</option>
+                    <option value="NH">New Hampshire</option>
+                    <option value="NJ">New Jersey</option>
+                    <option value="NM">New Mexico</option>
+                    <option value="NY">New York</option>
+                    <option value="NC">North Carolina</option>
+                    <option value="ND">North Dakota</option>
+                    <option value="OH">Ohio</option>
+                    <option value="OK">Oklahoma</option>
+                    <option value="OR">Oregon</option>
+                    <option value="PA">Pennsylvania</option>
+                    <option value="RI">Rhode Island</option>
+                    <option value="SC">South Carolina</option>
+                    <option value="SD">South Dakota</option>
+                    <option value="TN">Tennessee</option>
+                    <option value="TX">Texas</option>
+                    <option value="UT">Utah</option>
+                    <option value="VT">Vermont</option>
+                    <option value="VA">Virginia</option>
+                    <option value="WA">Washington</option>
+                    <option value="WV">West Virginia</option>
+                    <option value="WI">Wisconsin</option>
+                    <option value="WY">Wyoming</option>
+                    </select>
+                </div>
+            <div class="col-md-12">
+                <label for="editZipcode" class="form-label">ZipCode</label>
+                <input type="text" class="form-control" id="editZipcode" name="editZipcode" value="{{ production['zipCode'] }}" required>
+            </div>
+            <div class="col-md-12">
+                <label for="editStudio" class="form-label">Studio</label>
+                <select type="text" id="editStudio" class="form-select" name="editStudio" value="{{ production['studio'] }}" required>
+                    <option value="" selected hidden>Select...</option>
+                        {% for studio in studios%}
+                        <option value="{{ studio['studioID'] }}">{{studio['studioName']}}</option>
+                        {% endfor %}
+                </select>
+            </div>
             <div class="col-12 text-center">
                 <button type="submit" class="btn btn-success">Update</button>  
                 <a href="/studios" class="btn btn-danger">Cancel<a>
