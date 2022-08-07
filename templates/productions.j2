@@ -14,16 +14,16 @@
                 <th>Delete</th>
             </tr>
         <tbody>
-            {% for productions in productions %}
+            {% for production in productions %}
                 <tr class="align-middle text-center">
-                    {% for val in productions.keys() %}
-                        <td>{{productions[val]}}</td>
+                    {% for val in production.keys() %}
+                        <td>{{production[val]}}</td>
                     {% endfor %}
                     <td>
-                        <a href="/productions/edit/{{ productions[ 'ID' ]}}"><button type="submit" class="btn btn-info">Edit</button></a>
+                        <a href="/productions/edit/{{ production[ 'ID' ]}}"><button type="submit" class="btn btn-info">Edit</button></a>
                     </td>
                     <td>
-                        <a href="/productions/delete/{{ productions[ 'ID' ]}}"><button type="submit" class="btn btn-danger">Delete</button></a>
+                        <a href="/productions/delete/{{ production[ 'ID' ]}}"><button type="submit" class="btn btn-danger">Delete</button></a>
                     </td>
                 </tr>
             {% endfor %}
