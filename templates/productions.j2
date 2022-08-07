@@ -3,7 +3,6 @@
 {% block content %}
 
 <div class="container">
-<span class="align-top">
 <legend class="d-flex float-none w-auto p-2 justify-content-center">Productions</legend>
     <table class="table">
         <thead class="align-center text-center">
@@ -30,17 +29,16 @@
             {% endfor %}
         </tbody>
     </tables>
-    </span>
 </div>
 
 <form class="container" style="max-width:35vw" action="" method="POST">
     <legend class="float-none w-auto p-2 text-center">Add New Production</legend>
     <div class= "row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <label for="inputProductionName" class="form-label">Production Name</label>
             <input type="text" class="form-control" id="inputProductionName" name="inputProductionName" required>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-6">
             <label for="inputStudioID" class="form-label">Studio Name</label>
             <select type="text" id="inputStudioID" class="form-select" name="inputStudioID" required>
                 <option value="" selected hidden>Select...</option>
