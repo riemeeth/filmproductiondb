@@ -15,7 +15,7 @@ def root():
 @ app.route('/productions', methods=['GET', 'POST'])
 def productions():
     if request.method == 'GET':
-        getproductions = "SELECT Studios.studioName as Studio, productionID as ID, showName as 'Show Name', Productions.contactName as 'Contact Name', Productions.contactEmail as 'Contact Email', Productions.addressLine1 as 'Address Line 1', Productions.addressLine2 as 'Address Line 2', Productions.city as City, Productions.state as State, Productions.zipCode as 'Zip Code' FROM Productions INNER JOIN Studios ON Productions.studioID = Studios.studioID;"
+        getproductions = "SELECT productionID as ID, Studios.studioName as Studio, showName as 'Show Name', Productions.contactName as 'Contact Name', Productions.contactEmail as 'Contact Email', Productions.addressLine1 as 'Address Line 1', Productions.addressLine2 as 'Address Line 2', Productions.city as City, Productions.state as State, Productions.zipCode as 'Zip Code' FROM Productions INNER JOIN Studios ON Productions.studioID = Studios.studioID;"
         getstudionames = "SELECT studioName, studioID FROM Studios;"
         conn = connection()
         cursor = conn.cursor()
@@ -27,8 +27,8 @@ def productions():
         conn.close()
         return render_template('productions.j2', productions=results, studios=results_studios)
     if request.method == 'POST':
-        studioID = request.form['inputStudioID']
         showName = request.form['inputProductionName']
+        studioID = request.form['inputStudioID']
         contactName = request.form['inputContactName']
         contactEmail = request.form['inputContactEmail']
         addressLine1 = request.form['inputAddressLine1']
@@ -36,7 +36,7 @@ def productions():
         city = request.form['inputCity']
         state = request.form['inputState']
         zipCode = request.form['inputZipCode']
-        query = "INSERT INTO Productions (studioID, showName, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);"
+        query = "INSERT INTO Productions (showName, studioID, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);"
         conn = connection()
         cursor = conn.cursor()
         cursor.execute(query, (studioID, showName, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode))
