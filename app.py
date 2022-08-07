@@ -54,7 +54,7 @@ def edit_production(id):
         conn = connection()
         cursor = conn.cursor()
         cursor.execute(getproduction, (id))
-        results = cursor.fetchall()
+        results = cursor.fetchone()
         cursor.execute(getstudionames)
         results_studios = cursor.fetchall()
         cursor.close()
