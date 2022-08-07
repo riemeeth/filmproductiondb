@@ -46,6 +46,52 @@ def productions():
         return redirect('/productions')
 
 
+@ app.route('/productions/edit/<int:id>', methods=['GET', 'POST'])
+def edit_production(id):
+    if request.method == 'GET':
+        getproductions = "SELECT Studios.studioName as Studio, productionID as ID, showName as 'Show Name', Productions.contactName as 'Contact Name', Productions.contactEmail as 'Contact Email', Productions.addressLine1 as 'Address Line 1', Productions.addressLine2 as 'Address Line 2', Productions.city as City, Productions.state as State, Productions.zipCode as 'Zip Code' FROM Productions INNER JOIN Studios ON Productions.studioID = Studios.studioID;"
+        getstudionames = "SELECT studioName, studioID FROM Studios;"
+        conn = connection()
+        cursor = conn.cursor()
+        cursor.execute(getproductions)
+        results = cursor.fetchall()
+        cursor.execute(getstudionames)
+        results_studios = cursor.fetchall()
+        cursor.close()
+        conn.close()
+        return render_template('productions_edit.j2', productions=results, studios=results_studios)
+    if request.method == 'POST':
+        studioID = request.form['editStudioID']
+        showName = request.form['editProductionName']
+        contactName = request.form['editContactName']
+        contactEmail = request.form['editContactEmail']
+        addressLine1 = request.form['editAddressLine1']
+        addressLine2 = request.form['editAddressLIne2']
+        city = request.form['editCity']
+        state = request.form['editState']
+        zipCode = request.form['editZipCode']
+        query = "UPDATE Productions SET studioID = %s, showName = %s, contactName = %s, contactEmail = %s, addressLine1 = %s, addressLine2 = %s, city = %s, state = %s, zipCode = %s;"
+        conn = connection()
+        cursor = conn.cursor()
+        cursor.execute(query, (studioID, showName, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return redirect('/productions')
+
+
+@ app.route('/productions/delete/<int:id>')
+def delete_production(id):
+    query = "DELETE FROM Productions WHERE productionID = %s;"
+    conn = conenction()
+    cursor = conn.cursor()
+    cursor.execute(query, (id))
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return redirect('/productions')
+
+    
 @ app.route('/orders', methods=['GET', 'POST'])
 def orders():
     if request.method == 'GET':
