@@ -3,6 +3,7 @@
 {% block content %}
 
 <div class="container">
+<span class="align-top">
 <legend class="d-flex float-none w-auto p-2 justify-content-center">Productions</legend>
     <table class="table">
         <thead class="align-center text-center">
@@ -29,6 +30,7 @@
             {% endfor %}
         </tbody>
     </tables>
+    </span>
 </div>
 
 <form class="container" style="max-width:35vw" action="" method="POST">
@@ -66,6 +68,7 @@
             <label for="inputAddressLine2" class="form-label">AddressLine2</label>
             <input type="text" class="form-control" id="inputAddressLine2" name="inputAddressLine2" required>
         </div>
+    <div class= "row">
         <div class="col-md-6">
             <label for="inputCity" class="form-label">City</label>
             <input type="text" class="form-control" id="inputCity" name="inputCity" required>
@@ -131,6 +134,7 @@
             <label for="inputZipCode" class="form-label">Zip Code</label>
             <input type="text" class="form-control" id="inputZipCode" name="inputZipCode" required>
         </div>
+    </div>
         <div class="col-12 text-center">
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
