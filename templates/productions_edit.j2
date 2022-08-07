@@ -33,8 +33,8 @@
             </div>
             <div class="col-md-4">
                 <label for="editState" class="form-label">State</label>
-                <select id="editState" class="form-select" id="editState" name="editState" value="{{ production['state'] }}" required>
-                    <option value="" selected hidden>Select...</option>
+                <select id="editState" class="form-select" id="editState" name="editState" required>
+                    <option value="{{ production['state'] }}" selected> {{ production['state'] }} </option>
                     <option value="AL">Alabama</option>
                     <option value="AK">Alaska</option>
                     <option value="AZ">Arizona</option>

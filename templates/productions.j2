@@ -34,10 +34,18 @@
 <form class="container" style="max-width:35vw" action="" method="POST">
     <legend class="float-none w-auto p-2 text-center">Add New Production</legend>
     <div class= "row g-3">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <label for="inputProductionName" class="form-label">Production Name</label>
             <input type="text" class="form-control" id="inputProductionName" name="inputProductionName" required>
         </div>
+        <div class="col-md-6">
+            <label for="inputStudioID" class="form-label">Studio Name</label>
+            <select type="text" id="inputStudioID" class="form-select" name="inputStudioID" required>
+                <option value="" selected hidden>Select...</option>
+                    {% for studio in studios%}
+                    <option value="{{ studio['studioID'] }}">{{studio['studioName']}}</option>
+                    {% endfor %}
+            </select>
         <div class="col-md-6">
             <label for="inputContactName" class="form-label">Contact Name</label>
             <input type="text" class="form-control" id="inputProductionName" name="inputContactName" required>
