@@ -53,7 +53,7 @@ def edit_production(id):
         getstudionames = "SELECT studioName, studioID FROM Studios;"
         conn = connection()
         cursor = conn.cursor()
-        cursor.execute(getproduction)
+        cursor.execute(getproduction, (id))
         results = cursor.fetchall()
         cursor.execute(getstudionames)
         results_studios = cursor.fetchall()
