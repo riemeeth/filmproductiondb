@@ -83,7 +83,7 @@ def edit_production(id):
 @ app.route('/productions/delete/<int:id>')
 def delete_production(id):
     query = "DELETE FROM Productions WHERE productionID = %s;"
-    conn = conenction()
+    conn = connection()
     cursor = conn.cursor()
     cursor.execute(query, (id))
     conn.commit()
