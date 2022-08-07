@@ -11,6 +11,15 @@
                 <input type="text" class="form-control" id="editProductionName" name="editProductionName" value="{{ production['showName'] }}" required>
             </div>
             <div class="col-md-12">
+                <label for="editStudio" class="form-label">Studio</label>
+                <select type="text" id="editStudio" class="form-select" name="editStudio" required>
+                        <option value="{{ production['studioName'] }}">{{production['studioName']}}</option>
+                        {% for studio in studios%}
+                        <option value="{{ studio['studioID'] }}">{{studio['studioName']}}</option>
+                        {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-12">
                 <label for="editContactName" class="form-label">Contact Name</label>
                 <input type="text" class="form-control" id="editContactName" name="editContactName" value="{{ production['contactName'] }}" required>
             </div>
@@ -90,15 +99,6 @@
             <div class="col-md-12">
                 <label for="editZipcode" class="form-label">ZipCode</label>
                 <input type="text" class="form-control" id="editZipcode" name="editZipcode" value="{{ production['zipCode'] }}" required>
-            </div>
-            <div class="col-md-12">
-                <label for="editStudio" class="form-label">Studio</label>
-                <select type="text" id="editStudio" class="form-select" name="editStudio" required>
-                        <option value="{{ production['studioID'] }}">{{production['studioID']}}</option>
-                        {% for studio in studios%}
-                        <option value="{{ studio['studioID'] }}">{{studio['studioName']}}</option>
-                        {% endfor %}
-                </select>
             </div>
             <div class="col-12 text-center">
                 <button type="submit" class="btn btn-success">Update</button>  
