@@ -27,15 +27,15 @@ def productions():
         conn.close()
         return render_template('productions.j2', productions=results, studios=results_studios)
     if request.method == 'POST':
-        studioID = request.form['inputStudioName']
-        showName = request.form['inputProductionName']
-        contactName = request.form['inputContactName']
-        contactEmail = request.form['inputContactEmail']
-        addressLine1 = request.form['inputAddressLine1']
-        addressLine2 = request.form['inputAddressLine2']
+        studioID = request.form['inputStudio']
+        showName = request.form['inputName']
+        contactName = request.form['inputContact']
+        contactEmail = request.form['inputEmail']
+        addressLine1 = request.form['inputAddress']
+        addressLine2 = request.form['inputAddress2']
         city = request.form['inputCity']
         state = request.form['inputState']
-        zipCode = request.form['zipCode']
+        zipCode = request.form['inputZip']
         query = "INSERT INTO Productions (studioID, showName, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);"
         conn = connection()
         cursor = conn.cursor()
