@@ -227,6 +227,41 @@ def salesreps():
         return redirect('/salesreps')
 
 
+@ app.route('/salesreps/edit/<int:id>', methods=['GET', 'POST'])
+def edit_salesrep(id):
+    if request.method == 'GET':
+        getrep = "SELECT * FROM SalesReps WHERE salesRepID = %s;"
+        conn = connection()
+        cursor = conn.cursor()
+        cursor.execute(query, (id))
+        results = cursor.fetchone()
+        cursor.close()
+        conn.close()
+        return render_template('salesreps_edit.j2', salesrep=results)
+    elif request.method == 'POST'
+        repName = request.form['editName']
+        repEmail = request.form['editEmail']
+        query = "UPDATE SalesReps SET repName = %s, repEmail = %s WHERE salesRepID = %s;"
+        conn = connection()
+        cursor = conn.cursor()
+        cursor.execute(query, (repName, repEmail, id))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return redirect('/salesreps')
+
+
+@ app.route('/salesreps/delete/<int:id>')
+def delete_salesrep(id):
+    query = "DELETE FROM SalesReps WHERE salesRepID = %s;"
+    conn = connection()
+    cursor = conn.cursor()
+    cursor.execute(query, (id))
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return redirect('/salesreps')
+
 
 @ app.route('/studios', methods=['GET', 'POST'])
 def studios():
