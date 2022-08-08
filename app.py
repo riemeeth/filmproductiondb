@@ -107,7 +107,7 @@ def order_invoice(id):
 @ app.route('/orders/edit/<int:id>')
 def edit_order(id):
         query = "SELECT DISTINCT(orders.orderid) as 'Order ID', studios.studioName as Studio, productions.showName as Production, termscodes.termName as Terms, salesreps.salesRepName as 'Sales Rep', orderDate as 'Order Date', purchaseOrder as 'Purchase Order', (SELECT SUM(totalAmount) FROM orderdetails WHERE orders.orderid = orderdetails.orderid) as 'Total Invoice Amount' FROM Orders INNER JOIN orderdetails ON orders.orderid = orderdetails.orderid INNER JOIN productions ON orders.productionid = productions.productionid INNER JOIN salesreps ON orders.salesrepid = salesreps.salesrepid INNER JOIN termscodes ON termscodes.termscodeid = orders.termscodeid LEFT JOIN studios ON studios.studioID = productions.studioID WHERE orders.orderid = %s;"
-        query2 = "SELECT orderDetailsID as ID, DISTINCT(orderdetails.productID) as 'Product ID', products.productName as 'Product Name', orderQty as Quantity, unitPrice as 'Unit Price', totalAmount as 'Total Amount' FROM OrderDetails INNER JOIN products ON products.productID = orderdetails.productid WHERE orderid = %s;"
+        query2 = "SELECT DISTINCT(orderdetails.productID) as 'Product ID', orderDetailsID as ID, products.productName as 'Product Name', orderQty as Quantity, unitPrice as 'Unit Price', totalAmount as 'Total Amount' FROM OrderDetails INNER JOIN products ON products.productID = orderdetails.productid WHERE orderid = %s;"
         conn = connection()
         cursor = conn.cursor()
         cursor.execute(query, (id))
