@@ -72,6 +72,8 @@ def edit_production(id):
         zipCode = request.form['editZip']
         if studioID == "None":
             settoNull = "UPDATE Productions SET studioID = NULL;"
+            conn = connection()
+            cursor = conn.cursor() 
             cursor.execute(settoNull, (studioID))
             query = "UPDATE Productions SET showName = %s, contactName = %s, contactEmail = %s, addressLine1 = %s, addressLine2 = %s, city = %s, state = %s, zipCode = %s WHERE productionID = %s;"
             cursor.execute(query, (showName, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode, id))
