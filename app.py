@@ -119,7 +119,7 @@ def edit_order(id):
         return render_template('orders_edit.j2', orders=results, orderdetails=results_details)
 
 
-@ app.route('/orders/edit/deletelineitem/<int:id>')
+@ app.route('/orders/deletelineitem/<int:id>')
 def delete_lineitem(id):
     query = "DELETE FROM OrderDetails WHERE orderDetailsID = %s;"
     conn = connection()
@@ -128,7 +128,7 @@ def delete_lineitem(id):
     conn.commit()
     cursor.close()
     conn.close()
-    return redirect('/orders/edit/')
+    return redirect('/orders')
 
 
 @ app.route('/products', methods=['GET', 'POST'])
