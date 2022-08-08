@@ -70,6 +70,8 @@ def edit_production(id):
         city = request.form['editCity']
         state = request.form['editState']
         zipCode = request.form['editZip']
+        conn = connection()
+        cursor = conn.cursor()
         if studioID == 'None':
             cursor.execute(
                 "UPDATE Productions SET studioID = NULL WHERE productionID = %s;", (id))
