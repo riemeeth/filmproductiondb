@@ -12,74 +12,6 @@ def root():
     return render_template('index.j2')
 
 
-@ app.route('/productions', methods=['GET', 'POST'])
-def productions():
-    if request.method == 'GET':
-        getproductions = "SELECT Productions.productionID as ID, Studios.studioName as Studio, Productions.showName as 'Show Name', Productions.contactName as 'Contact Name', Productions.contactEmail as 'Contact Email', Productions.addressLine1 as 'Address Line 1', Productions.addressLine2 as 'Address Line 2', Productions.city as City, Productions.state as State, Productions.zipCode as 'Zip Code' FROM Productions LEFT JOIN Studios ON Productions.studioID = Studios.studioID;"
-        getstudionames = "SELECT studioName, studioID FROM Studios;"
-        conn = connection()
-        cursor = conn.cursor()
-        cursor.execute(getproductions)
-        results = cursor.fetchall()
-        cursor.execute(getstudionames)
-        results_studios = cursor.fetchall()
-        cursor.close()
-        conn.close()
-        return render_template('productions.j2', productions=results, studios=results_studios)
-    elif request.method == 'POST':
-        showName = request.form['inputProductionName']
-        studioID = request.form['inputStudio']
-        contactName = request.form['inputContactName']
-        contactEmail = request.form['inputContactEmail']
-        addressLine1 = request.form['inputAddressLine1']
-        addressLine2 = request.form['inputAddressLIne2']
-        city = request.form['inputCity']
-        state = request.form['inputState']
-        zipCode = request.form['inputZipCode']
-        query = "INSERT INTO Productions (studioID, showName, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);"
-        conn = connection()
-        cursor = conn.cursor()
-        cursor.execute(query, (studioID, showName, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode))
-        conn.commit()
-        cursor.close()
-        conn.close()
-        return redirect('/productions')
-
-
-@ app.route('/productions/edit/<int:id>', methods=['GET', 'POST'])
-def edit_production(id):
-    if request.method == 'GET':
-        getproduction = "SELECT productionID, Studios.studioName, showName, Productions.contactName, Productions.contactEmail, Productions.addressLine1, Productions.addressLine2, Productions.city, Productions.state, Productions.zipCode FROM Productions LEFT JOIN Studios ON Productions.studioID = Studios.studioID WHERE productionID = %s;"
-        getstudionames = "SELECT studioName, studioID FROM Studios;"
-        conn = connection()
-        cursor = conn.cursor()
-        cursor.execute(getproduction, (id))
-        results = cursor.fetchone()
-        cursor.execute(getstudionames)
-        results_studios = cursor.fetchall()
-        cursor.close()
-        conn.close()
-        return render_template('productions_edit.j2', production=results, studios=results_studios)
-    elif request.method == 'POST':
-        showName = request.form['editProductionName']
-        studioID = request.form['editStudioID']
-        contactName = request.form['editContactName']
-        contactEmail = request.form['editContactEmail']
-        addressLine1 = request.form['editAddressLine1']
-        addressLine2 = request.form['editAddressLIne2']
-        city = request.form['editCity']
-        state = request.form['editState']
-        zipCode = request.form['editZipCode']
-        query = "UPDATE Productions SET showName = %s, studioID = %s, contactName = %s, contactEmail = %s, addressLine1 = %s, addressLine2 = %s, city = %s, state = %s, zipCode = %s WHERE productionID = %s;"
-        conn = connection()
-        cursor = conn.cursor()
-        cursor.execute(query, (showName, studioID, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode, id))
-        conn.commit()
-        cursor.close()
-        conn.close()
-        return redirect('/productions')
-
-
 @ app.route('/productions/delete/<int:id>')
 def delete_production(id):
     query = "DELETE FROM Productions WHERE productionID = %s;"
@@ -171,6 +103,32 @@ def order_invoice(id):
     cursor.close()
     conn.close()
     return render_template('orders_invoice.j2', orders=results, orderdetails=results_details)
+
+@ app.route('/orders/edit/<int:id>')
+def edit_order(id):
+        query = "SELECT DISTINCT(orders.orderid) as 'Order ID', studios.studioName as Studio, productions.showName as Production, termscodes.termName as Terms, salesreps.salesRepName as 'Sales Rep', orderDate as 'Order Date', purchaseOrder as 'Purchase Order', (SELECT SUM(totalAmount) FROM orderdetails WHERE orders.orderid = orderdetails.orderid) as 'Total Invoice Amount' FROM Orders INNER JOIN orderdetails ON orders.orderid = orderdetails.orderid INNER JOIN productions ON orders.productionid = productions.productionid INNER JOIN salesreps ON orders.salesrepid = salesreps.salesrepid INNER JOIN termscodes ON termscodes.termscodeid = orders.termscodeid LEFT JOIN studios ON studios.studioID = productions.studioID WHERE orders.orderid = %s;"
+        query2 = "SELECT DISTINCT(orderdetails.productID) as 'Product ID', products.productName as 'Product Name', orderQty as Quantity, unitPrice as 'Unit Price', totalAmount as 'Total Amount' FROM OrderDetails INNER JOIN products ON products.productID = orderdetails.productid WHERE orderid = %s;"
+        conn = connection()
+        cursor = conn.cursor()
+        cursor.execute(query, (id))
+        results = cursor.fetchall()
+        cursor.execute(query2, (id))
+        results_details = cursor.fetchall()
+        cursor.close()
+        conn.close()
+        return render_template('orders_edit.j2', order=results, orderdetails=results_details)
+
+
+@ app.route('/orders/edit/deletelineitem/<int:id>')
+def delete_lineitem(id):
+    query = "DELETE FROM OrderDetails WHERE orderDetailsID = %s;"
+    conn = connection()
+    cursor = conn.cursor()
+    cursor.execute(query, (id))
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return redirect('/orders/edit/<int:id>')
 
 
 @ app.route('/products', methods=['GET', 'POST'])
