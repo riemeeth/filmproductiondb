@@ -45,6 +45,40 @@ def productions():
         conn.close()
         return redirect('/productions')
 
+
+@ app.route('/productions/edit/<int:id>', methods=['GET', 'POST'])
+def edit_production(id):
+    if request.method == 'GET':
+        getproduction = "SELECT productionid as ID, Studios.studioName as Studio, Productions.showName as Production, Productions.contactName as 'Contact', Productions.contactEmail as 'Contact Email', Productions.addressLine1 as 'Address Line 1', Productions.addressLine2 as 'Address Line 2', Productions.city as City, Productions.state as State, Productions.zipCode as Zip FROM Productions INNER JOIN Studios ON Studios.studioID = Productions.studioID WHERE productionID = %s;"
+        getstudios = "SELECT studioID, studioName FROM Studios;"
+        conn = connection()
+        cursor = conn.cursor()
+        cursor.execute(query, (id))
+        results = cursor.fetchone()
+        cursor.close()
+        conn.close()
+        return render_template('studios_edit.j2', studio=results)
+    if request.method == 'POST':
+        studioID = request.form['editStudio']
+        showName = request.form['editName']
+        contactName = request.form['editContact']
+        contactEmail = request.form['editEmail']
+        addressLine1 = request.form['editAddress']
+        addressLine2 = request.form['editAddress2']
+        city = request.form['editCity']
+        state = request.form['editState']
+        zipCode = request.form['editZip']
+        query = "UPDATE Productions SET studioID = %s, showName = %s, contactName = %s, contactEmail = %s, addressLine1 = %s, addressLine2 = %s, city = %s, state = %s, zipCode = %s WHERE productionID = %s;"
+        conn = connection()
+        cursor = conn.cursor()
+        cursor.execute(query, (studioID, showName, contactName, contactEmail,
+                               addressLine1, addressLine2, city, state, zipCode, id))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return redirect('/studios')
+
+
 @ app.route('/productions/delete/<int:id>')
 def delete_production(id):
     query = "DELETE FROM Productions WHERE productionID = %s;"
