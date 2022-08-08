@@ -45,6 +45,7 @@
                         <label for="inputStudio" class="form-label">Studio</label>
                         <select type="text" id="inputStudio" class="form-select" name="inputStudio" required>
                             <option value="" selected hidden>Select...</option>
+                            <option value="NULL" selected hidden>None</option>
                             {% for studio in studios%}
                             <option value="{{ studio['studioID'] }}">{{studio['studioName']}}</option>
                             {% endfor %}
