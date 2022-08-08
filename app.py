@@ -238,7 +238,7 @@ def edit_salesrep(id):
         cursor.close()
         conn.close()
         return render_template('salesreps_edit.j2', salesrep=results)
-    elif request.method == 'POST'
+    elif request.method == 'POST':
         repName = request.form['editName']
         repEmail = request.form['editEmail']
         query = "UPDATE SalesReps SET repName = %s, repEmail = %s WHERE salesRepID = %s;"
