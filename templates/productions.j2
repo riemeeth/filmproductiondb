@@ -2,8 +2,9 @@
 
 {% block content %}
 
-<div class="container">
-<legend class="d-flex float-none w-auto p-2 justify-content-center">Productions</legend>
+{# Table of ALL productions #}
+<div class = "container">
+<legend class="d-flex float-none w-auto p-2 justify-content-center">All Productions</legend>
     <table class="table">
         <thead class="align-center text-center">
             <tr>
@@ -16,59 +17,64 @@
         </thead>
         <tbody>
             {% for production in productions %}
-                <tr class="align-middle text-center">
-                    {% for val in production.keys() %}
-                        <td>{{production[val]}}</td>
-                    {% endfor %}
-                    <td>
-                        <a href="/productions/edit/{{ production[ 'ID' ]}}"><button type="submit" class="btn btn-info">Edit</button></a>
-                    </td>
-                    <td>
-                        <a href="/productions/delete/{{ production[ 'ID' ]}}"><button type="submit" class="btn btn-danger">Delete</button></a>
-                    </td>
-                </tr>
-            {% endfor %}
+            <tr class="align-middle text-center">
+                {% for val in production.keys() %}
+                    <td>{{production[val]}}</td>
+                {% endfor %}
+                <td>
+                    {# <a href="/productions/edit/{{ studio[ 'ID' ]}}"><button type="submit" class="btn btn-info">Edit</button></a> #}
+                </td>
+                <td>
+                    <a href="/productions/delete/{{ production['ID'] }}"><button type="submit" class="btn btn-danger">Delete</button><a>
+                </td>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
 </div>
 
-<form class="container" style="max-width:35vw" action="" method="POST">
-    <legend class="float-none w-auto p-2 text-center">Add New Production</legend>
-    <div class= "row g-3">
-        <div class="col-md-6">
-            <label for="inputProductionName" class="form-label">Production Name</label>
-            <input type="text" class="form-control" id="inputProductionName" name="inputProductionName" required>
-        </div>
-        <div class="col-md-6">
-            <label for="inputStudio" class="form-label">Studio Name</label>
-            <select id="inputStudio" class="form-select" name="inputStudio" required>
-                <option value="" selected hidden>Select...</option>
-                    {% for studio in studios%}
-                    <option value="{{ studio['studioID'] }}">{{studio['studioName']}}</option>
-                    {% endfor %}
-            </select>
-        </div>
-        <div class="col-md-6">
-            <label for="inputContactName" class="form-label">Contact Name</label>
-            <input type="text" class="form-control" id="inputProductionName" name="inputContactName" required>
-        </div>
-        <div class="col-md-6">
-            <label for="inputContactEmail" class="form-label">Contact Email</label>
-            <input type="text" class="form-control" id="inputContactEmail" name="inputContactEmail" required>
-        </div>
-        <div class="col-md-12">
-            <label for="inputAddressLine1" class="form-label">Address Line 1</label>
-            <input type="text" class="form-control" id="inputAddressLine1" name="inputAddressLine1" required>
-        </div>
-        <div class="col-md-12">
-            <label for="inputAddressLine2" class="form-label">AddressLine2</label>
-            <input type="text" class="form-control" id="inputAddressLine2" name="inputAddressLine2" required>
-        </div>
-        <div class="col-md-6">
-            <label for="inputCity" class="form-label">City</label>
-            <input type="text" class="form-control" id="inputCity" name="inputCity" required>
-        </div>
-        <div class="col-md-4">
+{# Container for new production #}
+<div class="d-flex justify-content-center">
+    {# New production form #}
+    <div class="d-flex justify-content-center">
+        <div class="col-md-8">
+            <form class="container" action="" method="POST">
+                <legend class="float-none w-auto p-2 text-center">Add New Production</legend>
+                <div class= "row g-3">
+                    <div class="col-12">
+                        <label for="inputName" class="form-label">Production Name</label>
+                        <input type="text" class="form-control" id="inputName" name="inputName" required>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="inputStudio" class="form-label">Studio</label>
+                        <select type="text" id="inputStudio" class="form-select" name="inputStudio" required>
+                            <option value="" selected hidden>Select...</option>
+                            {% for studio in studios%}
+                            <option value="{{ studio['studioID'] }}">{{studio['studioName']}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputContact" class="form-label">Production Contact</label>
+                        <input type="text" class="form-control" id="inputContact" name="inputContact" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="inputEmail" name="inputEmail" required>
+                    </div>
+                    <div class="col-12">
+                        <label for="inputAddress" class="form-label">Address Line 1</label>
+                        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" name="inputAddress" required>
+                    </div>
+                    <div class="col-12">
+                        <label for="inputAddress2" class="form-label">Address Line 2</label>
+                        <input type="text" class="form-control" id="inputAddress2" placeholder="Floor, Suite, or Building"name="inputAddress2">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputCity" class="form-label">City</label>
+                        <input type="text" class="form-control" id="inputCity" name="inputCity" required>
+                    </div>
+                    <div class="col-md-4">
                         <label for="inputState" class="form-label">State</label>
                         <select id="inputState" class="form-select" id="inputState" name="inputState" required>
                             <option value="" selected hidden>Select...</option>
@@ -125,15 +131,20 @@
                             <option value="WY">Wyoming</option>
                         </select>
                     </div>
-        <div class="col-md-2">
-            <label for="inputZipCode" class="form-label">Zip Code</label>
-            <input type="text" class="form-control" id="inputZipCode" name="inputZipCode" required>
-        </div>
-        <div class="col-12 text-center">
-            <button type="submit" class="btn btn-primary">Submit</button>
+                    <div class="col-md-2">
+                        <label for="inputZip" class="form-label">Zip</label>
+                        <input type="text" class="form-control" id="inputZip" name="inputZip" pattern="[0-9]{5}" required>
+                    </div>
+                    <div class="col-12">
+                    </div>
+                    </div>
+                    <div class="col-12 text-center">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>  
+            </form>
         </div>
     </div>
-    </div>
-</form>
+</div>
 
-{% endblock %}
+{%- endblock content %}

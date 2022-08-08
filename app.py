@@ -12,6 +12,39 @@ def root():
     return render_template('index.j2')
 
 
+@ app.route('/productions', methods=['GET', 'POST'])
+def productions():
+    if request.method == 'GET':
+        getproductions = "SELECT productions.productionid as ID, studios.studioName as Studio, productions.showName as Production, productions.contactName as 'Production Contact', productions.contactEmail as Email, productions.addressLine1 as 'Address Line 1', productions.addressLine2 as 'Address Line 2', productions.city as City, productions.state as State, productions.zipCode as Zip FROM Productions LEFT JOIN Studios ON studios.studioID = productions.studioID ORDER BY productions.productionID ASC;"
+        getstudios = "SELECT studioID, studioName FROM Studios;"
+        conn = connection()
+        cursor = conn.cursor()
+        cursor.execute(getproductions)
+        results = cursor.fetchall()
+        cursor.execute(getstudios)
+        results_studios = cursor.fetchall()
+        cursor.close()
+        conn.close()
+        return render_template('productions.j2', productions=results, studios=results_studios)
+    if request.method == 'POST':
+        studioID = request.form['inputStudioName']
+        showName = request.form['inputProductionName']
+        contactName = request.form['inputContactName']
+        contactEmail = request.form['inputContactEmail']
+        addressLine1 = request.form['inputAddressLine1']
+        addressLine2 = request.form['inputAddressLine2']
+        city = request.form['inputCity']
+        state = request.form['inputState']
+        zipCode = request.form['zipCode']
+        query = "INSERT INTO Productions (studioID, showName, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);"
+        conn = connection()
+        cursor = conn.cursor()
+        cursor.execute(query, (studioID, showName, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return redirect('/productions')
+
 @ app.route('/productions/delete/<int:id>')
 def delete_production(id):
     query = "DELETE FROM Productions WHERE productionID = %s;"
@@ -103,6 +136,7 @@ def order_invoice(id):
     cursor.close()
     conn.close()
     return render_template('orders_invoice.j2', orders=results, orderdetails=results_details)
+
 
 @ app.route('/orders/edit/<int:id>')
 def edit_order(id):
