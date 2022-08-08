@@ -132,7 +132,7 @@ def delete_lineitem(id):
 
 
 @ app.route('/orders/delete/<int:id>')
-def delete_studio(id):
+def delete_order(id):
     query = "DELETE FROM Orders WHERE orderID = %s;"
     conn = connection()
     cursor = conn.cursor()
