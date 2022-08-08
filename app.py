@@ -70,7 +70,7 @@ def edit_production(id):
         city = request.form['editCity']
         state = request.form['editState']
         zipCode = request.form['editZipCode']
-        query = "UPDATE Productions SET studioID = %s, showName = %s, contactName = %s, contactEmail = %s, addressLine1 = %s, addressLine2 = %s, city = %s, state = %s, zipCode = %s;"
+        query = "UPDATE Productions SET showName = %s, studioID = %s, contactName = %s, contactEmail = %s, addressLine1 = %s, addressLine2 = %s, city = %s, state = %s, zipCode = %s;"
         conn = connection()
         cursor = conn.cursor()
         cursor.execute(query, (showName, studioID, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode))
