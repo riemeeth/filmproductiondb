@@ -73,7 +73,7 @@ def edit_production(id):
         query = "UPDATE Productions SET showName = %s, studioID = %s, contactName = %s, contactEmail = %s, addressLine1 = %s, addressLine2 = %s, city = %s, state = %s, zipCode = %s WHERE productionID = %s;"
         conn = connection()
         cursor = conn.cursor()
-        cursor.execute(query, (showName, studioID, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode))
+        cursor.execute(query, (showName, studioID, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode, id))
         conn.commit()
         cursor.close()
         conn.close()
