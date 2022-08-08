@@ -61,8 +61,8 @@ def edit_production(id):
         conn.close()
         return render_template('productions_edit.j2', production=results, studios=results_studios)
     if request.method == 'POST':
-        studioID = request.form['editStudioID']
         showName = request.form['editProductionName']
+        studioID = request.form['editStudioID']
         contactName = request.form['editContactName']
         contactEmail = request.form['editContactEmail']
         addressLine1 = request.form['editAddressLine1']
@@ -70,7 +70,7 @@ def edit_production(id):
         city = request.form['editCity']
         state = request.form['editState']
         zipCode = request.form['editZipCode']
-        query = "UPDATE Productions SET showName = %s, studioID = %s, contactName = %s, contactEmail = %s, addressLine1 = %s, addressLine2 = %s, city = %s, state = %s, zipCode = %s;"
+        query = "UPDATE Productions SET showName = %s, studioID = %s, contactName = %s, contactEmail = %s, addressLine1 = %s, addressLine2 = %s, city = %s, state = %s, zipCode = %s WHERE productionID = %s;"
         conn = connection()
         cursor = conn.cursor()
         cursor.execute(query, (showName, studioID, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode))
