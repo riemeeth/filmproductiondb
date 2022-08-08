@@ -233,7 +233,7 @@ def edit_salesrep(id):
         getrep = "SELECT * FROM SalesReps WHERE salesRepID = %s;"
         conn = connection()
         cursor = conn.cursor()
-        cursor.execute(query, (id))
+        cursor.execute(getrep, (id))
         results = cursor.fetchone()
         cursor.close()
         conn.close()
