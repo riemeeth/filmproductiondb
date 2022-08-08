@@ -15,7 +15,7 @@ def root():
 @ app.route('/productions', methods=['GET', 'POST'])
 def productions():
     if request.method == 'GET':
-        getproductions = "SELECT productionID as ID, Studios.studioName as Studio, showName as 'Show Name', Productions.contactName as 'Contact Name', Productions.contactEmail as 'Contact Email', Productions.addressLine1 as 'Address Line 1', Productions.addressLine2 as 'Address Line 2', Productions.city as City, Productions.state as State, Productions.zipCode as 'Zip Code' FROM Productions LEFT JOIN Studios ON Productions.studioID = Studios.studioID;"
+        getproductions = "SELECT Productions.productionID as ID, Studios.studioName as Studio, Productions.showName as 'Show Name', Productions.contactName as 'Contact Name', Productions.contactEmail as 'Contact Email', Productions.addressLine1 as 'Address Line 1', Productions.addressLine2 as 'Address Line 2', Productions.city as City, Productions.state as State, Productions.zipCode as 'Zip Code' FROM Productions LEFT JOIN Studios ON Productions.studioID = Studios.studioID;"
         getstudionames = "SELECT studioName, studioID FROM Studios;"
         conn = connection()
         cursor = conn.cursor()
@@ -26,7 +26,7 @@ def productions():
         cursor.close()
         conn.close()
         return render_template('productions.j2', productions=results, studios=results_studios)
-    if request.method == 'POST':
+    elif request.method == 'POST':
         showName = request.form['inputProductionName']
         studioID = request.form['inputStudio']
         contactName = request.form['inputContactName']
