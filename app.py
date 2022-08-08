@@ -221,8 +221,8 @@ def salesreps():
         conn = connection()
         cursor = conn.cursor()
         cursor.execute(query, (salesRepName, salesRepEmail))
-        results = cursor.commit()
-        coursor.close()
+        conn.commit()
+        cursor.close()
         conn.close()
         return redirect('/salesreps')
 
