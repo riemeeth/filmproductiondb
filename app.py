@@ -239,12 +239,12 @@ def edit_salesrep(id):
         conn.close()
         return render_template('salesreps_edit.j2', salesrep=results)
     elif request.method == 'POST':
-        repName = request.form['editName']
-        repEmail = request.form['editEmail']
-        query = "UPDATE SalesReps SET repName = %s, repEmail = %s WHERE salesRepID = %s;"
+        salesRepName = request.form['editName']
+        salesRepEmail = request.form['editEmail']
+        query = "UPDATE SalesReps SET salesRepName = %s, salesRepEmail = %s WHERE salesRepID = %s;"
         conn = connection()
         cursor = conn.cursor()
-        cursor.execute(query, (repName, repEmail, id))
+        cursor.execute(query, (salesRepName, salesRepEmail, id))
         conn.commit()
         cursor.close()
         conn.close()
