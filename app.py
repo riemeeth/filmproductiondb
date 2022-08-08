@@ -70,18 +70,15 @@ def edit_production(id):
         city = request.form['editCity']
         state = request.form['editState']
         zipCode = request.form['editZip']
-        if studioID == "None":
-            settoNull = "UPDATE Productions SET studioID = NULL;"
-            conn = connection()
-            cursor = conn.cursor() 
-            cursor.execute(settoNull, (studioID))
-            query = "UPDATE Productions SET showName = %s, contactName = %s, contactEmail = %s, addressLine1 = %s, addressLine2 = %s, city = %s, state = %s, zipCode = %s WHERE productionID = %s;"
-            cursor.execute(query, (showName, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode, id))
+        if editStudio == 'None':
+            cursor.execute(
+                "UPDATE Productions SET studioID = NULL WHERE productionID = %s;", (id))
+            query2 = "UPDATE Productions SET showName = %s, contactName = %s, contactEmail = %s, addressLine1 = %s, addressLine2 = %s, city = %s, state = %s, zipCode = %s WHERE productionID = %s;"
+            cursor.execute(query2, (request.form['editName'], request.form['editContact'], request.form['editEmail'],
+                                    request.form['editAddress'], request.form['editAddress2'], request.form['editCity'], request.form['editState'], request.form['editZip'], id))
         else:
-            query = "UPDATE Productions SET studioID = %s, showName = %s, contactName = %s, contactEmail = %s, addressLine1 = %s, addressLine2 = %s, city = %s, state = %s, zipCode = %s WHERE productionID = %s;"
-            conn = connection()
-            cursor = conn.cursor()
-            cursor.execute(query, (studioID, showName, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode, id))
+            cursor.execute(query, (editStudio, request.form['editName'], request.form['editContact'], request.form['editEmail'],
+                                   request.form['editAddress'], request.form['editAddress2'], request.form['editCity'], request.form['editState'], request.form['editZip'], id))
         conn.commit()
         cursor.close()
         conn.close()
