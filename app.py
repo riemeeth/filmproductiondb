@@ -363,7 +363,7 @@ def vendor_products():
 
 @ app.route('/termscodes', methods=['GET', 'POST'])
 def termscode():
-    if request.method == 'GET'
+    if request.method == 'GET':
         query = "SELECT termsCodeID as ID, termCode as Code, termName as Name FROM TermsCodes;"
         conn = connection()
         cursor = conn.cursor()
