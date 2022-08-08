@@ -3,11 +3,11 @@
 {% block content %}
 
 <div class ="container">
-<legend class="d-flex float-none w-auto p-2 justify-content-center">Order ID #{{order[0]['Order ID']}} from {{ order[0]['Production'] }} </legend>
+<legend class="d-flex float-none w-auto p-2 justify-content-center">Order ID #{{orders[0]['Order ID']}} from {{ orders[0]['Production'] }} </legend>
     <table class="table">
         <thead class="align-center text-center">
             <tr>
-                {% for key in order[0].keys() %}
+                {% for key in orders[0].keys() %}
                     <th>{{key}}</th>
                 {% endfor %}
             </tr>

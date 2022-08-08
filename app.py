@@ -116,7 +116,7 @@ def edit_order(id):
         results_details = cursor.fetchall()
         cursor.close()
         conn.close()
-        return render_template('orders_edit.j2', order=results, orderdetails=results_details)
+        return render_template('orders_edit.j2', orders=results, orderdetails=results_details)
 
 
 @ app.route('/orders/edit/deletelineitem/<int:id>')
@@ -128,7 +128,7 @@ def delete_lineitem(id):
     conn.commit()
     cursor.close()
     conn.close()
-    return redirect('/orders/edit/<int:id>')
+    return redirect('/orders/edit/')
 
 
 @ app.route('/products', methods=['GET', 'POST'])
