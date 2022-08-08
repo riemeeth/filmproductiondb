@@ -14,7 +14,6 @@
                 <label for="editStudio" class="form-label">Studio</label>
                 <select type="text" id="editStudio" class="form-select" name="editStudio" required>
                         <option value="{{ production['studioID'] }}">{{ production['studioName'] }}</option>
-                        <option value="None">None</opion>
                         {% for studio in studios %}
                         <option value="{{ studio['studioID'] }}">{{ studio['studioName'] }}</option>
                         {% endfor %}

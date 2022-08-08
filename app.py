@@ -70,17 +70,11 @@ def edit_production(id):
         city = request.form['editCity']
         state = request.form['editState']
         zipCode = request.form['editZip']
+        query = "UPDATE Productions SET studioID = %s, showName = %s, contactName = %s, contactEmail = %s, addressLine1 = %s, addressLine2 = %s, city = %s, state = %s, zipCode = %s WHERE productionID = %s;"
         conn = connection()
         cursor = conn.cursor()
-        if studioID == 'None':
-            cursor.execute(
-                "UPDATE Productions SET studioID = NULL WHERE productionID = %s;", (id))
-            query2 = "UPDATE Productions SET showName = %s, contactName = %s, contactEmail = %s, addressLine1 = %s, addressLine2 = %s, city = %s, state = %s, zipCode = %s WHERE productionID = %s;"
-            cursor.execute(query2, (request.form['editName'], request.form['editContact'], request.form['editEmail'],
-                                    request.form['editAddress'], request.form['editAddress2'], request.form['editCity'], request.form['editState'], request.form['editZip'], id))
-        else:
-            cursor.execute(query, (editStudio, request.form['editName'], request.form['editContact'], request.form['editEmail'],
-                                   request.form['editAddress'], request.form['editAddress2'], request.form['editCity'], request.form['editState'], request.form['editZip'], id))
+        cursor.execute(query, (studioName, contactName, contactEmail,
+                               addressLine1, addressLine2, city, state, zipCode, id))
         conn.commit()
         cursor.close()
         conn.close()
