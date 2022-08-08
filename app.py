@@ -443,6 +443,18 @@ def edit_termscode(id):
         return redirect('/termscodes')
 
 
+@ app.route('/termscodes/delete/<int:id>')
+def delete_termscode(id):
+    query = "DELETE FROM TermsCodes WHERE termsCodeID = %s;"
+    conn = connection()
+    cursor = conn.cursor()
+    cursor.execute(query, (id))
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return redirect('/termscodes')
+
+
 # Listener on port 5000
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
