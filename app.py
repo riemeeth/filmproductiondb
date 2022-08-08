@@ -15,7 +15,7 @@ def root():
 @ app.route('/productions', methods=['GET', 'POST'])
 def productions():
     if request.method == 'GET':
-        getproductions = "SELECT productions.productionid as ID, studios.studioName as Studio, productions.showName as Production, productions.contactName as 'Production Contact', productions.contactEmail as Email, productions.addressLine1 as 'Address Line 1', productions.addressLine2 as 'Address Line 2', productions.city as City, productions.state as State, productions.zipCode as Zip FROM Productions LEFT JOIN Studios ON studios.studioID = productions.studioID ORDER BY productions.productionID ASC;"
+        getproductions = "SELECT productionid as ID, Studios.studioName as Studio, Productions.showName as Production, Productions.contactName as 'Contact', Productions.contactEmail as 'Contact Email', Productions.addressLine1 as 'Address Line 1', Productions.addressLine2 as 'Address Line 2', Productions.city as City, Productions.state as State, Productions.zipCode as Zip FROM Productions INNER JOIN Studios ON Studios.studioID = Productions.studioID;"
         getstudios = "SELECT studioID, studioName FROM Studios;"
         conn = connection()
         cursor = conn.cursor()
