@@ -1,43 +1,45 @@
-<!doctype html>
-
 {% extends "nav_footer.j2" %}
+
 {% block content %}
-<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/test.css') }}">
-<div>
-<table>
-<thead>
-<tr>
-    {% for key in termscodes[0].keys() %}
-    <th>{{key}}</th>
-    {% endfor %}
-</tr>
-<tbody>
-{% for code in termscodes %}
-<tr>
-    {% for val in code.keys() %}
-    <td>{{code[val]}}</td>
-    {% endfor %}
-    <td><a href="">Edit</a></td>
-    <td><a href="">Delete</a></td>
-</tr>
-{% endfor %}
-</tbody>
-</table>
+
+{# build ALL products table #}
+<div class="container">
+<legend class="d-flex float-none w-auto p-2 justify-content-center">Terms Codes</legend>
+    <table class="table">
+        <thead class="align-center text-center">
+            <tr>
+                {% for key in termscodes[0].keys() %}
+                    <th>{{key}}</th>
+                {% endfor %}
+            </tr>
+        <tbody>
+            {% for termscodes in termscodes %}
+                <tr class="align-middle text-center">
+                    {% for val in termscodes.keys() %}
+                    <td>{{termscodes[val]}}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 
-<div>
-    <fieldset>
-        <legend>Add Terms Code</legend>
-        <form action="/addtermscode" method="POST">
-            <label for="termcode">Terms Code:</label>
-            <input type="text" name="termcode" id="termcode">
-            <label for="termname">Terms Code Name:</label>
-            <input type="text" name="termname" id="termname">
-            <input type="submit" value="Add">
-        </form>
-    </fieldset>
-</div>
+{# container the CREATE form #}
+<form class="container" style="max-width:35vw" action="" method="POST">
+    <legend class="float-none w-auto p-2 text-center">Add Terms Code</legend>
+    <div class= "row g-3">
+        <div class="col-md-12">
+            <label for="inputCode" class="form-label">Code</label>
+            <input type="text" class="form-control" id="inputCode" name="inputCode" required>
+        </div>
+        <div class="col-md-12">
+            <label for="inputName" class="form-label">Name</label>
+            <input type="text" class="form-control" id="inputName" name="inputName" required>
+        </div>
+        <div class="col-12 text-center">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </div>  
+</form>
 
-
-{{super()}}
 {% endblock %}

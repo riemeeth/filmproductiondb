@@ -60,7 +60,7 @@ def edit_production(id):
         cursor.close()
         conn.close()
         return render_template('productions_edit.j2', production=results, studios=results_studios)
-    if request.method == 'POST':
+    elif request.method == 'POST':
         showName = request.form['editProductionName']
         studioID = request.form['editStudioID']
         contactName = request.form['editContactName']
@@ -361,16 +361,28 @@ def vendor_products():
         return render_template('vendors_products.j2', products=results)
 
 
-@ app.route('/termscodes', methods=['GET'])
+@ app.route('/termscodes', methods=['GET', 'POST'])
 def termscode():
-    query = "SELECT * FROM TermsCodes;"
-    conn = connection()
-    cursor = conn.cursor()
-    cursor.execute(query)
-    results = cursor.fetchall()
-    cursor.close()
-    conn.close()
-    return render_template('termscodes.j2', termscodes=results)
+    if request.method == 'GET'
+        query = "SELECT termsCodeID as ID, termCode as Code, termName as Name FROM TermsCodes;"
+        conn = connection()
+        cursor = conn.cursor()
+        cursor.execute(query)
+        results = cursor.fetchall()
+        cursor.close()
+        conn.close()
+        return render_template('termscodes.j2', termscodes=results)
+    elif request.method == 'POST':
+        termCode = request.form['inputCode']
+        termName = request.form['inputName']
+        query = "INSERT INTO TermsCodes (termCode, termName) VALUES (%s, %s);"
+        conn = connection()
+        cursor = conn.cursor()
+        cursor.execute(query, (termCode, termName))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return redirect('/termscodes')
 
 
 # Listener on port 5000
