@@ -131,6 +131,18 @@ def delete_lineitem(id):
     return redirect('/orders')
 
 
+@ app.route('/orders/delete/<int:id>')
+def delete_studio(id):
+    query = "DELETE FROM Orders WHERE orderID = %s;"
+    conn = connection()
+    cursor = conn.cursor()
+    cursor.execute(query, (id))
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return redirect('/orders')
+
+
 @ app.route('/products', methods=['GET', 'POST'])
 def products():
     if request.method == 'GET':
