@@ -1,0 +1,25 @@
+{% extends "nav_footer.j2" %}
+
+{% block content %}
+
+{# Edit studio form. value field calls all fields of row #}
+    <div class="container">
+    <form class="container col-md-6 justify-content-center" action="" method="POST">
+        <legend class="float-none w-auto p-2 text-center">Edit Sales Rep</legend>
+        <div class= "row g-3">
+            <div class="col-md-6">
+                <label for="editTerm" class="form-label">Term</label>
+                <input type="text" class="form-control" id="editTerm" name="editTerm" value="{{ termscode['termName']}}" required>
+            </div>
+            <div class="col-md-6">
+                <label for="editCode" class="form-label">Code</label>
+                <input type="text" class="form-control" id="editCode" name="editCode" value="{{ termscode['termCode'] }}" required>
+            </div>
+            <div class="col-12 text-center">
+                <button type="submit" class="btn btn-success">Update</button>  
+                <a href="/termscodes" class="btn btn-danger">Cancel<a>
+            </div>  
+    </form>
+</div>
+
+{% endblock %}

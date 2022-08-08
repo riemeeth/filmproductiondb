@@ -49,7 +49,7 @@ def productions():
 @ app.route('/productions/edit/<int:id>', methods=['GET', 'POST'])
 def edit_production(id):
     if request.method == 'GET':
-        getproduction = "SELECT productionID, Studios.studioName, showName, Productions.contactName, Productions.contactEmail, Productions.addressLine1, Productions.addressLine2, Productions.city, Productions.state, Productions.zipCode FROM Productions INNER JOIN Studios ON Productions.studioID = Studios.studioID WHERE productionID = %s;"
+        getproduction = "SELECT productionID, Studios.studioName, showName, Productions.contactName, Productions.contactEmail, Productions.addressLine1, Productions.addressLine2, Productions.city, Productions.state, Productions.zipCode FROM Productions LEFT JOIN Studios ON Productions.studioID = Studios.studioID WHERE productionID = %s;"
         getstudionames = "SELECT studioName, studioID FROM Studios;"
         conn = connection()
         cursor = conn.cursor()
@@ -414,6 +414,29 @@ def termscode():
         conn = connection()
         cursor = conn.cursor()
         cursor.execute(query, (termCode, termName))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return redirect('/termscodes')
+
+@ app.route('/termscodes/edit/<int:id>', methods=['GET', 'POST'])
+def edit_termscode(id):
+    if request.method == 'GET':
+        query = "SELECT * FROM TermsCodes WHERE termsCodeID = %s;"
+        conn = connection()
+        cursor = conn.cursor()
+        cursor.execute(query, (id))
+        results = cursor.fetchone()
+        cursor.close()
+        conn.close()
+        return render_template('termscodes_edit.j2', termscode=results)
+    elif request.method == 'POST':
+        termName = request.form['editTerm']
+        termCode = request.form['editCode']
+        query = "UPDATE TermsCodes SET termName = %s, termCode = %s WHERE termsCodeID = %s;"
+        conn = connection()
+        cursor = conn.cursor()
+        cursor.execute(query, (termName, termCode, id))
         conn.commit()
         cursor.close()
         conn.close()
