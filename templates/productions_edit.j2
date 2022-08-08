@@ -12,7 +12,7 @@
             </div>
             <div class="col-md-12">
                 <label for="editStudio" class="form-label">Studio</label>
-                <select type="text" id="editStudio" class="form-select" name="editStudio">
+                <select type="text" id="editStudio" class="form-select" name="editStudio" required>
                         <option value="{{ production['studioID'] }}">{{ production['studioName'] }}</option>
                         {% for studio in studios %}
                         <option value="{{ studio['studioID'] }}">{{ studio['studioName'] }}</option>
