@@ -12,7 +12,6 @@
                     <th>{{key}}</th>
                 {% endfor %}
                 <th>Edit</th>
-                <th>Delete</th>
             </tr>
         <tbody>
             {% for salesreps in salesreps %}
@@ -22,9 +21,6 @@
                     {% endfor %}
                     <td>
                         <a href="/salesreps/edit/{{ salesreps[ 'ID' ] }}"><button type="submit" class="btn btn-info">Edit</button></a>
-                    </td>
-                    <td>
-                        <a href="/salesreps/delete/{{ salesreps[ 'ID' ] }}"><button type="submit" class="btn btn-danger">Delete</button></a>
                     </td>
                 </tr>
             {% endfor %}

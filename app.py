@@ -251,18 +251,6 @@ def edit_salesrep(id):
         return redirect('/salesreps')
 
 
-@ app.route('/salesreps/delete/<int:id>')
-def delete_salesrep(id):
-    query = "DELETE FROM SalesReps WHERE salesRepID = %s;"
-    conn = connection()
-    cursor = conn.cursor()
-    cursor.execute(query, (id))
-    conn.commit()
-    cursor.close()
-    conn.close()
-    return redirect('/salesreps')
-
-
 @ app.route('/studios', methods=['GET', 'POST'])
 def studios():
     if request.method == 'GET':
@@ -418,41 +406,6 @@ def termscode():
         cursor.close()
         conn.close()
         return redirect('/termscodes')
-
-@ app.route('/termscodes/edit/<int:id>', methods=['GET', 'POST'])
-def edit_termscode(id):
-    if request.method == 'GET':
-        query = "SELECT * FROM TermsCodes WHERE termsCodeID = %s;"
-        conn = connection()
-        cursor = conn.cursor()
-        cursor.execute(query, (id))
-        results = cursor.fetchone()
-        cursor.close()
-        conn.close()
-        return render_template('termscodes_edit.j2', termscode=results)
-    elif request.method == 'POST':
-        termName = request.form['editTerm']
-        termCode = request.form['editCode']
-        query = "UPDATE TermsCodes SET termName = %s, termCode = %s WHERE termsCodeID = %s;"
-        conn = connection()
-        cursor = conn.cursor()
-        cursor.execute(query, (termName, termCode, id))
-        conn.commit()
-        cursor.close()
-        conn.close()
-        return redirect('/termscodes')
-
-
-@ app.route('/termscodes/delete/<int:id>')
-def delete_termscode(id):
-    query = "DELETE FROM TermsCodes WHERE termsCodeID = %s;"
-    conn = connection()
-    cursor = conn.cursor()
-    cursor.execute(query, (id))
-    conn.commit()
-    cursor.close()
-    conn.close()
-    return redirect('/termscodes')
 
 
 # Listener on port 5000

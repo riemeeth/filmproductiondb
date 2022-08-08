@@ -11,8 +11,6 @@
                 {% for key in termscodes[0].keys() %}
                     <th>{{key}}</th>
                 {% endfor %}
-                <th>Edit</th>
-                <th>Delete</th>
             </tr>
         <tbody>
             {% for termscodes in termscodes %}
@@ -20,12 +18,6 @@
                     {% for val in termscodes.keys() %}
                     <td>{{termscodes[val]}}</td>
                     {% endfor %}
-                    <td>
-                        <a href="/termscodes/edit/{{ termscodes[ 'ID' ] }}"><button type="submit" class="btn btn-info">Edit</button></a>
-                    </td>
-                    <td>
-                        <a href="/termscodes/delete/{{ termscodes[ 'ID' ] }}"><button type="submit" class="btn btn-danger">Delete</button></a>
-                    </td>
                 </tr>
             {% endfor %}
         </tbody>
