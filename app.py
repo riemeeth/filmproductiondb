@@ -53,11 +53,13 @@ def edit_production(id):
         getstudios = "SELECT studioID, studioName FROM Studios;"
         conn = connection()
         cursor = conn.cursor()
-        cursor.execute(query, (id))
+        cursor.execute(getproduction, (id))
         results = cursor.fetchone()
+        cursor.execute(getstudios)
+        results_studios = cursor.fetchall()
         cursor.close()
         conn.close()
-        return render_template('studios_edit.j2', studio=results)
+        return render_template('productions_edit.j2', production=results, studios=results_studios)
     if request.method == 'POST':
         studioID = request.form['editStudio']
         showName = request.form['editName']
@@ -76,7 +78,7 @@ def edit_production(id):
         conn.commit()
         cursor.close()
         conn.close()
-        return redirect('/studios')
+        return redirect('/productions')
 
 
 @ app.route('/productions/delete/<int:id>')
