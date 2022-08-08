@@ -217,7 +217,7 @@ def salesreps():
     elif request.method == 'POST':
         salesRepName = request.form['inputName']
         salesRepEmail = request.form['inputEmail']
-        query = "INSERT INTO SalesReps (salesRepName, salesRepEmail);"
+        query = "INSERT INTO SalesReps (salesRepName, salesRepEmail) VALUES (%s, %s);"
         conn = connection()
         cursor = conn.cursor()
         cursor.execute(query, (salesRepName, salesRepEmail))
