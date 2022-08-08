@@ -49,7 +49,7 @@ def productions():
 @ app.route('/productions/edit/<int:id>', methods=['GET', 'POST'])
 def edit_production(id):
     if request.method == 'GET':
-        getproduction = "SELECT productionid as ID, Studios.studioName as Studio, Productions.showName as Production, Productions.contactName as 'Contact', Productions.contactEmail as 'Contact Email', Productions.addressLine1 as 'Address Line 1', Productions.addressLine2 as 'Address Line 2', Productions.city as City, Productions.state as State, Productions.zipCode as Zip FROM Productions INNER JOIN Studios ON Studios.studioID = Productions.studioID WHERE productionID = %s;"
+        getproduction = "SELECT Studios.studioName as Studio, Productions.showName as Production, Productions.contactName as 'Contact', Productions.contactEmail as 'Contact Email', Productions.addressLine1 as 'Address Line 1', Productions.addressLine2 as 'Address Line 2', Productions.city as City, Productions.state as State, Productions.zipCode as Zip FROM Productions INNER JOIN Studios ON Studios.studioID = Productions.studioID WHERE productionID = %s;"
         getstudios = "SELECT studioID, studioName FROM Studios;"
         conn = connection()
         cursor = conn.cursor()
