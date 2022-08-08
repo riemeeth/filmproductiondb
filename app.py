@@ -36,7 +36,7 @@ def productions():
         city = request.form['inputCity']
         state = request.form['inputState']
         zipCode = request.form['inputZipCode']
-        query = "INSERT INTO Productions (showName, studioID, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);"
+        query = "INSERT INTO Productions (studioID, showName, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);"
         conn = connection()
         cursor = conn.cursor()
         cursor.execute(query, (studioID, showName, contactName, contactEmail, addressLine1, addressLine2, city, state, zipCode))
@@ -203,16 +203,29 @@ def products():
         return redirect('/products')
 
 
-@ app.route('/salesreps')
+@ app.route('/salesreps', methods=['GET', 'POST'])
 def salesreps():
-    query = "SELECT * FROM SalesReps;"
-    conn = connection()
-    cursor = conn.cursor()
-    cursor.execute(query)
-    results = cursor.fetchall()
-    cursor.close()
-    conn.close()
-    return render_template('salesreps.j2', salesreps=results)
+    if request.method == 'GET':
+        query = "SELECT salesRepID as ID, salesRepName as Name, salesRepEmail as Email FROM SalesReps;"
+        conn = connection()
+        cursor = conn.cursor()
+        cursor.execute(query)
+        results = cursor.fetchall()
+        cursor.close()
+        conn.close()
+        return render_template('salesreps.j2', salesreps=results)
+    elif request.method == 'POST':
+        salesRepName = request.form['inputName']
+        salesRepEmail = request.form['inputEmail']
+        query = "INSERT INTO SalesReps (salesRepName, salesRepEmail);"
+        conn = connection()
+        cursor = conn.cursor()
+        cursor.execute(query, (salesRepName, salesRepEmail))
+        results = cursor.commit()
+        coursor.close()
+        conn.close()
+        return redirect('/salesreps')
+
 
 
 @ app.route('/studios', methods=['GET', 'POST'])
