@@ -1,0 +1,156 @@
+{% extends "nav_footer.j2" %}
+
+{% block content %}
+
+
+<body>
+
+    <script>
+        var counter = 1;
+        function addRow() {
+            var items = document.getElementById("inputProduct");
+            var itemsClone = items.cloneNode(true);
+            itemsClone.name = "product" + counter;
+            var quantity = document.getElementById("inputQuantity");
+            var quantityClone = quantity.cloneNode(true);
+            quantityClone.name= "inputQuantity" + counter;
+            var price = document.getElementById("inputPrice");
+            var priceClone = price.cloneNode(true);
+            priceClone.name = "inputPrice" + counter;
+          
+            document.getElementById("inputProduct").parentNode.appendChild(itemsClone);
+            document.getElementById("inputQuantity").parentNode.appendChild(quantityClone);
+            document.getElementById("inputPrice").parentNode.appendChild(priceClone);
+            
+            return counter++;
+        }
+    </script>
+
+    <div class = "container">
+    <legend class="d-flex float-none w-auto p-2 justify-content-center">All Orders</legend>
+        <table class="table">
+            <thead class="align-center text-center">
+                <tr>
+                    {% for key in orders[0].keys() %}
+                        <th>{{key}}</th>
+                    {% endfor %}
+                    <th>View Order</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr class="align-middle text-center">
+                    {% for val in order.keys() %}
+                        <td>{{order[val]}}</td>
+                    {% endfor %}
+                    <td>
+                    <a href="/orders/invoice/{{order['Order ID']}}"><button type="submit" class="btn btn-secondary">Invoice</button></a>
+                    </td>
+                    <td>
+                    <a href="/orders/edit/{{ order[ 'Order ID' ]}}"><button type="submit" class="btn btn-info">Edit</button></a>
+                    </td>
+                    <td>
+                    <a href="/orders/delete/{{ order[ 'Order ID' ] }}"><button type="submit" class="btn btn-danger">Delete</button><a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {# container holds two containers - one for the CREATE form and one for FILTERED SEARCH table #}
+    <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center">
+            <div class="col-md-10">
+                <form class="container" action="" method="POST">
+                    <legend class="float-none w-auto p-2 text-center">Create New Order</legend>
+                    <div class= "row g-3">
+                        <div class="col-12">
+                            <label for="inputProduction" class="form-label">Production</label>
+                            <select id="inputProduction" class="form-select" name=production required>
+                                <option value="" selected hidden>Select...</option>
+                                        {% for production in productions %}
+                                        <option value="{{ production['productionID'] }}">{{production['showName']}}</option>
+                                        {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputTerm" class="form-label">Terms</label>
+                            <select id="inputTerm" class="form-select" name=term required>
+                                <option value="" selected hidden>Select...</option>
+                                        {% for term in terms %}
+                                        <option value="{{ term['termscodeid'] }}">{{term['termName']}}</option>
+                                        {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputRep" class="form-label">Sales Rep</label>
+                            <select id="inputRep" class="form-select" name=salesrep required>
+                                <option value="" selected hidden>Select...</option>
+                                        {% for rep in salesreps %}
+                                        <option value="{{ rep['salesRepID'] }}">{{rep['salesRepName']}}</option>
+                                        {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputDate" class="form-label">Date</label>
+                            <input type="datetime-local" class="form-control" id="inputDate" name="inputDate" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputPO" class="form-label">Purchase Order</label>
+                            <input type="text" class="form-control" id="inputPO" name="inputPO" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputProduct" class="form-label">Line Item</label>
+                            <select class="form-select" name=product required id="inputProduct">
+                                    <option value="" selected hidden>Select...</option>
+                                            {% for product in products %}
+                                            <option value="{{ product['productID'] }}">{{product['productName']}}</option>
+                                            {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="inputQuantity" class="form-label">Quantity</label>
+                            <input type="number" class="form-control"  name="inputQuantity" required id="inputQuantity">
+                    
+                        </div>
+                        <div class="col-md-4">
+                            <label for="inputPrice" class="form-label">Price</label>
+                            <input type="number" class="form-control" min=".01" step=".01"   placeholder="$0.00" required id="inputPrice" name="inputPrice">
+                        </div>
+                        <div class="col-12">
+                        </div>  
+                        </div>
+                        <div class="col-12 text-center">
+                            <button type="button" id="btn" class="btn btn-success" onclick="addRow()"/>Add Line Item</button>
+                            <button type="submit" class="btn btn-primary">Create Order</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <form class="d-flex justify-content-center" action="orders/production" method="GET">
+                    <div class="row-group text-center">
+                        <legend class="d-flex float-none w-auto p-2 justify-content-center">Show All Orders by Production</legend>
+                        <div class="col-md-12">
+                            <label for="inputProduction" class="form-label">Production</label>
+                            <select id="inputProduction" class="form-select" name=production required>
+                                <option value="" selected hidden>Select...</option>
+                                        {% for production in productions %}
+                                        <option value="{{ production['productionID'] }}">{{production['showName']}}</option>
+                                        {% endfor %}
+                            </select>
+                            <br>
+                            <a href="/orders/production/"><button type="submit" class="btn btn-primary">Show Orders</button></a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+{% endblock %}

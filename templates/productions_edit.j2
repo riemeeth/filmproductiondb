@@ -1,0 +1,112 @@
+{% extends "nav_footer.j2" %}
+
+{% block content %}
+
+{# Edit production form. value field calls all fields of row #}
+    <div class="container">
+    <form class="container col-md-6 justify-content-center" action="" method="POST">
+        <legend class="float-none w-auto p-2 text-center">Edit Production</legend>
+        <div class= "row g-3">
+            <div class="col-md-6">
+                <label for="editStudio" class="form-label">Studio</label>
+                <select id="editStudio" class="form-select" name=editStudio required>   
+                            <option value ="{{production['studioID']}}" selected>{{production['studioName']}}</option>
+                             <option value='None'>None</option>
+                            {% for studio in studios %} 
+                            <option value="{{ studio['studioID'] }}">{{studio['studioName']}}</option>
+                            {% endfor %}
+                </select>
+            </div>    
+            <div class="col-6">
+                <label for="editName" class="form-label">Production Name</label>
+                <input type="text" class="form-control" id="editName" name="editName" value="{{ production['showName']}}" required>
+            </div>
+            <div class="col-md-6">
+                <label for="editContact" class="form-label">Production Contact</label>
+                <input type="text" class="form-control" id="editContact" name="editContact" value="{{ production['contactName'] }}" required>
+            </div>
+            <div class="col-md-6">
+                <label for="editEmail" class="form-label">Email</label>
+                <input type="email" class="form-control" id="editEmail" name="editEmail" value="{{ production['contactEmail'] }}" required>
+            </div>
+            <div class="col-12">
+                <label for="editAddress" class="form-label">Address Line 1</label>
+                <input type="text" class="form-control" id="editAddress" placeholder="1234 Main St" name="editAddress" value="{{ production['addressLine1'] }}" required>
+            </div>
+            <div class="col-12">
+                <label for="editAddress2" class="form-label">Address Line 2</label>
+                <input type="text" class="form-control" id="editAddress2" placeholder="Floor, Suite, or Building"name="editAddress2" value="{{ production['addressLine2'] }}">
+            </div>
+            <div class="col-md-6">
+                <label for="editCity" class="form-label">City</label>
+                <input type="text" class="form-control" id="editCity" name="editCity" value="{{ production['city'] }}" required>
+            </div>
+            <div class="col-md-4">
+                <label for="editState" class="form-label">State</label>
+                <select id="editState" class="form-select" id="editState" name="editState" required>
+                    <option value="{{ production['state'] }}" selected> {{ production['state'] }} </option>
+                    <option value="AL">Alabama</option>
+                    <option value="AK">Alaska</option>
+                    <option value="AZ">Arizona</option>
+                    <option value="AR">Arkansas</option>
+                    <option value="CA">California</option>
+                    <option value="CO">Colorado</option>
+                    <option value="CT">Connecticut</option>
+                    <option value="DE">Delaware</option>
+                    <option value="DC">District Of Columbia</option>
+                    <option value="FL">Florida</option>
+                    <option value="GA">Georgia</option>
+                    <option value="HI">Hawaii</option>
+                    <option value="ID">Idaho</option>
+                    <option value="IL">Illinois</option>
+                    <option value="IN">Indiana</option>
+                    <option value="IA">Iowa</option>
+                    <option value="KS">Kansas</option>
+                    <option value="KY">Kentucky</option>
+                    <option value="LA">Louisiana</option>
+                    <option value="ME">Maine</option>
+                    <option value="MD">Maryland</option>
+                    <option value="MA">Massachusetts</option>
+                    <option value="MI">Michigan</option>
+                    <option value="MN">Minnesota</option>
+                    <option value="MS">Mississippi</option>
+                    <option value="MO">Missouri</option>
+                    <option value="MT">Montana</option>
+                    <option value="NE">Nebraska</option>
+                    <option value="NV">Nevada</option>
+                    <option value="NH">New Hampshire</option>
+                    <option value="NJ">New Jersey</option>
+                    <option value="NM">New Mexico</option>
+                    <option value="NY">New York</option>
+                    <option value="NC">North Carolina</option>
+                    <option value="ND">North Dakota</option>
+                    <option value="OH">Ohio</option>
+                    <option value="OK">Oklahoma</option>
+                    <option value="OR">Oregon</option>
+                    <option value="PA">Pennsylvania</option>
+                    <option value="RI">Rhode Island</option>
+                    <option value="SC">South Carolina</option>
+                    <option value="SD">South Dakota</option>
+                    <option value="TN">Tennessee</option>
+                    <option value="TX">Texas</option>
+                    <option value="UT">Utah</option>
+                    <option value="VT">Vermont</option>
+                    <option value="VA">Virginia</option>
+                    <option value="WA">Washington</option>
+                    <option value="WV">West Virginia</option>
+                    <option value="WI">Wisconsin</option>
+                    <option value="WY">Wyoming</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label for="editZip" class="form-label">Zip</label>
+                <input type="text" class="form-control" id="editZip" name="editZip" value="{{ production['zipCode'] }}" pattern="[0-9]{5}" required>
+            </div>
+            <div class="col-12 text-center">
+                <button type="submit" class="btn btn-success">Update</button>  
+                <a href="/productions" class="btn btn-danger">Cancel<a>
+            </div>  
+    </form>
+</div>
+
+{% endblock %}
